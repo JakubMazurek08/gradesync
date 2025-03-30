@@ -1,1 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
 @import "tailwindcss";
+
+@theme {
+    --font-open-sans: "Open Sans", sans-serif;
+
+    --color-magenta: #B52DC8;
+    --color-purple-400: #903FED;
+    --color-purple-500: #6817C5;
+    --color-blue-500: #3C1596;
+    --color-background: #1A1A1A;
+    --color-darkgray: #1F1F1F;
+    --color-mediumgray: #222222;
+    --color-lightgray: #D0D0D0;
+
+    --font-weight-bold: 700;
+    --font-weight-semibold: 600;
+}
+
+body{
+    background-color: var(--color-background);
+}

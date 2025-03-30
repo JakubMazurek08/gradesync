@@ -3,6 +3,7 @@ import express, {Request, Response} from "express";
 import {ENV} from "../config/env";
 import {dbClient} from "../config/database";
 import {userAuthenticationMiddleware} from "./userAuthentication.middleware";
+import bcrypt from "bcrypt"
 
 export const loginController = express.Router();
 
@@ -15,6 +16,7 @@ loginController.post("/", async (req: Request, res: Response) => {
 
         const result = await dbClient.query(`SELECT password FROM users WHERE login = '${login}'`);
         const userPassword = result.rows[0].password;
+
         if(!userPassword){
             res.status(404).send({msg: "User not found"});
             return;
@@ -24,13 +26,15 @@ loginController.post("/", async (req: Request, res: Response) => {
             throw new Error();
         }
 
-        if(userPassword === password){
-            const token = jwt.sign({login}, secret , { expiresIn: "1h" });
-            res.cookie("token", token);
-            res.status(200).send({msg:"Logged In Succesfully!"});
-        }else{
-            res.status(401).send({msg: "Invalid Credentials"});
-        }
+        bcrypt.compare(password, userPassword, function(err, result) {
+            if(result){
+                const token = jwt.sign({login}, secret , { expiresIn: "1h" });
+                res.cookie("token", token);
+                res.status(200).send({msg:"Logged In Succesfully!"});
+            }else{
+                res.status(401).send({msg: "Invalid Credentials"});
+            }
+        });
     } catch (error) {
         console.error(error);
         res.status(500).send({error: "Internal Server Error"});
@@ -48,4 +52,10 @@ loginController.get("/", userAuthenticationMiddleware, async (req: Request, res:
     }catch(err){
         res.status(500).send({error: "Internal Server Error"});
     }
+})
+
+loginController.post("/hash", (req: Request, res: Response) => {
+    bcrypt.hash('Password123', 10, (err, hash) => {
+        res.send({msg:"Hashed Password:", hash});
+    });
 })
