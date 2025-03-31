@@ -13,7 +13,7 @@ export const Home = () => {
             <Text> Text </Text>
             <Text type='small'> small </Text>
 
-            <div className={'flex flex-col gap-2'}>
+            <div className={'flex flex-col gap-2 w-64'}>
             <Button size='large' variant='important'>Click Me</Button>
             <Button size='large'>Click Me</Button>
 
@@ -22,8 +22,10 @@ export const Home = () => {
 
             <Button size='small' variant='important'>Click Me</Button>
             <Button size='small'>Click Me</Button>
+
+            <Inputs size='large' placeholder={'search...'}/>
+            <Inputs size={'medium'} placeholder={'search...'}/>
             </div>
-            <Inputs placeholder={'search...'}/>
        </>
     )
 }
