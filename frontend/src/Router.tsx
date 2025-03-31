@@ -1,10 +1,22 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
-import {Home} from "./pages/Home.tsx"
+import {Dashboard} from "./pages/Dashboard.tsx"
+import {Navbar} from "./pages/Navbar.tsx";
+import {GradesPage} from "./pages/GradesPage.tsx";
 
 const router = createBrowserRouter([
     {
-    path: '/',
-    element: <Home/>
+        path: '/',
+        element: <Navbar/>,
+        children:[
+            {
+                path: '/',
+                element: <Dashboard/>
+            },
+            {
+                path: '/grades',
+                element: <GradesPage/>
+            }
+        ]
     },
 ])
 

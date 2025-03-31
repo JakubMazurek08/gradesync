@@ -1,6 +1,6 @@
 interface TextProps {
     children: React.ReactNode;
-    type?: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'small';
+    type?: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'small' | 'nav';
 }
 
 export const Text = ({children, type}:TextProps) => {
@@ -14,6 +14,8 @@ export const Text = ({children, type}:TextProps) => {
         return <h4 className={"text-[20px] sm:text-[24px] text-white font-semibold font-open-sans"}>{children}</h4>;
     }else if (type === 'small'){
         return <small className={"text-[16px] sm:text-[16px] text-lightgray font-open-sans"}>{children}</small>;
+    }else if (type === 'nav'){
+        return <small className={"text-[20px] sm:text-[24px] text-current font-semibold font-open-sans"}>{children}</small>;
     }
     return <p className={`text-[20px] sm:text-[20px] text-lightgray font-open-sans`}>{children}</p>;
 }
