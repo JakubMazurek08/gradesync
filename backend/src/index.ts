@@ -4,16 +4,23 @@ import {connectDB, dbClient} from "./config/database";
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import {loginController} from "./authentication/login.controller";
+import {userController} from "./user/user.controller";
 
 const port = 3000;
 
 const app = express();
-app.use(cors());
+
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
+
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/login', loginController);
+app.use('/user', userController);
 
 connectDB().then(() => {
     app.listen(port, () => {
@@ -24,7 +31,6 @@ connectDB().then(() => {
 });
 
 app.get("/", async (req, res) => {
-
     try {
         const result = await dbClient.query("SELECT * FROM grades");
         res.json(result.rows);
