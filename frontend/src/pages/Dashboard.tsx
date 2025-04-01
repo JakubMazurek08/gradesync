@@ -3,7 +3,7 @@ import {Button} from "../components/Button.tsx";
 import {Inputs} from "../components/Inputs.tsx";
 
 
-export const Home = () => {
+export const Dashboard = () => {
     return(
         <>
             <Text type='h1'> Header </Text>
@@ -25,6 +25,7 @@ export const Home = () => {
 
             <Inputs size='large' placeholder={'search...'}/>
             <Inputs size={'medium'} placeholder={'search...'}/>
+
             </div>
        </>
     )
