@@ -1,6 +1,6 @@
-
 import { Text } from "../components/Text";
-import { NavBar } from "../components/NavBar"
+import Typewriter from "typewriter-effect";
+import { NavBar } from "../components/NavBar";
 
 export const LandingPage = () => {
   return (
@@ -9,11 +9,21 @@ export const LandingPage = () => {
         <NavBar />
       </div>
       <div className="relative z-20 h-[100vh] w-screen flex flex-row">
-        <div className="w-[50vw]">
-            <Text type="h1">TEST - TEST
-            </Text>
-        </div>
-        <div className="w-[50vw]">
+        <div className="w-[50vw] flex flex-row">
+          <Text type="h1">
+            <span className="flex flex-wrap items-center gap-2">
+              GradeSync -
+              <span className="ml-2">
+                <Typewriter
+                  options={{
+                    strings: ["TRACK", "SYNC", "SUCCEED"],
+                    autoStart: true,
+                    loop: true,
+                  }}
+                />
+              </span>
+            </span>
+          </Text>
         </div>
       </div>
       <div className="bg-black opacity-70 absolute inset-0 z-0"></div>
