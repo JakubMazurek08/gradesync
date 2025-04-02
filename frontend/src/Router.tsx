@@ -1,5 +1,4 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
-import {Home} from "./pages/Home.tsx"
 import {Footer} from "./components/Footer.tsx";
 import {Dashboard} from "./pages/Dashboard.tsx"
 import {Navbar} from "./pages/Navbar.tsx";
@@ -29,7 +28,7 @@ const router = createBrowserRouter([
     {
         path: '/LandingPage',
         element: <LandingPage/>
-    }
+    },
     {
         path: '/footer',
         element: <Footer />
