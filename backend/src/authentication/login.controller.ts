@@ -53,9 +53,3 @@ loginController.get("/", userAuthenticationMiddleware, async (req: Request, res:
         res.status(500).send({error: "Internal Server Error"});
     }
 })
-
-loginController.post("/hash", (req: Request, res: Response) => {
-    bcrypt.hash('Password123', 10, (err, hash) => {
-        res.send({msg:"Hashed Password:", hash});
-    });
-})
