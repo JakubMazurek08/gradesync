@@ -1,10 +1,13 @@
 import {Text} from "../components/Text.tsx";
+import {Navbar} from "./Navbar.tsx";
+import {NavBar} from "../components/NavBar.tsx";
 
 export const PricingLP = () => {
 
 
     return (
         <>
+            <NavBar />
             <div className="pt-20 pl-40">
                 <Text type="h1">GradeSync Plans</Text>
             </div>
