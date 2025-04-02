@@ -4,6 +4,7 @@ import {Footer} from "./components/Footer.tsx";
 import {Dashboard} from "./pages/Dashboard.tsx"
 import {Navbar} from "./pages/Navbar.tsx";
 import {GradesPage} from "./pages/GradesPage.tsx";
+import {PricingLP} from "./pages/PricingLP.tsx";
 
 const router = createBrowserRouter([
     {
@@ -23,7 +24,11 @@ const router = createBrowserRouter([
     {
         path: '/footer',
         element: <Footer />
-    }
+    },
+    {
+        path: '/pricing',
+        element: <PricingLP />
+    },
 ])
 
 export const Router = () => {
