@@ -59,6 +59,7 @@ export const PricingLP = () => {
                     </div>
                 </div>
             </div>
+            {/*Tutaj mamy ten question*/}
             <div className="bg-mediumgray w-370 h-70 mx-auto mt-45 rounded-3xl flex flex-row justify-between p-10 mb-40 ">
                 <div className="flex flex-col">
                     <div className="mb-6">
