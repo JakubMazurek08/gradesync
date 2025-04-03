@@ -1,5 +1,6 @@
 import {Text} from "../components/ui/Text.tsx";
 import {Grade} from "../components/ui/Grade.tsx";
+import {CoursesList} from "../components/gradesPage/CoursesList.tsx";
 
 export const StudentGradesPage = () => {
     return (
@@ -10,6 +11,7 @@ export const StudentGradesPage = () => {
                     <Text type='h3'>Average:</Text>
                     <Grade size='large' value={90}/>
                 </div>
+                <CoursesList/>
             </div>
 
         </main>

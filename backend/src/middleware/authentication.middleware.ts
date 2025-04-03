@@ -10,7 +10,7 @@ declare module "express" {
     }
 }
 
-export const userAuthenticationMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const authenticationMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies?.token;
 
     if (!token) {

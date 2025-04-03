@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import express, {Request, Response} from "express";
 import {ENV} from "../config/env";
 import {dbClient} from "../config/database";
-import {userAuthenticationMiddleware} from "./userAuthentication.middleware";
+import {authenticationMiddleware} from "../middleware/authentication.middleware";
 import bcrypt from "bcrypt"
 import {plainToInstance} from "class-transformer";
 import {RegisterDto} from "./dto/register.dto";
@@ -46,7 +46,7 @@ loginController.post("/", async (req: Request, res: Response) => {
 
 });
 
-loginController.get("/", userAuthenticationMiddleware, async (req: Request, res: Response) => {
+loginController.get("/", authenticationMiddleware, async (req: Request, res: Response) => {
     if(!req.userId){
         res.status(401).send({error: "unauthorized"});
     }

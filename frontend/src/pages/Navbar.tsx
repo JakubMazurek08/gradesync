@@ -11,12 +11,13 @@ export const Navbar = () => {
     const [hamburgerToggle, setHamburgerToggle] = useState<boolean>(false);
 
     useEffect(() => {
-        fetch('http://localhost:3000/login', {
+        const URL = import.meta.env.VITE_URL + "login";
+
+        fetch(URL, {
             method: 'GET',
             credentials: 'include'
         })
-            .then(res => (res.json().then(data => {setUserId(data.id); setIsTeacher(data.isTeacher);
-                console.log(data.isTeacher);}))
+            .then(res => (res.json().then(data => {setUserId(data.id); setIsTeacher(data.isTeacher);}))
             .catch(error => console.error('Error fetching user data:', error)))
     }, []);
 

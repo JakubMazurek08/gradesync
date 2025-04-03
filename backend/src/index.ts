@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import {loginController} from "./authentication/login.controller";
 import {userController} from "./user/user.controller";
+import {gradeController} from "./grade/grade.controller";
 
 const port = 3000;
 
@@ -21,6 +22,7 @@ app.use(cookieParser());
 
 app.use('/login', loginController);
 app.use('/user', userController);
+app.use('/grade', gradeController);
 
 connectDB().then(() => {
     app.listen(port, () => {
@@ -32,7 +34,7 @@ connectDB().then(() => {
 
 app.get("/", async (req, res) => {
     try {
-        const result = await dbClient.query("SELECT * FROM grades");
+        const result = await dbClient.query("SELECT * FROM grade");
         res.json(result.rows);
     } catch (error) {
         console.error(error);
