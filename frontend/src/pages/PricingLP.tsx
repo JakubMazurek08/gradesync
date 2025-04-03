@@ -6,7 +6,7 @@ import {Footer} from "../components/Footer.tsx";
 export const PricingLP = () => {
     return (
         <div className="flex flex-col min-h-screen">
-            <NavBar />
+            <div className="hidden md:block"><NavBar /></div>
             <div className="mx-auto px-4 md:px-8 pt-8 md:pt-16">
                 <Text type="h1" className="text-4xl font-bold">GradeSync Plans</Text>
             </div>
