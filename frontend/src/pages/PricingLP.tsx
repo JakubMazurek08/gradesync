@@ -7,9 +7,13 @@ export const PricingLP = () => {
     return (
         <div className="flex flex-col min-h-screen">
             <NavBar />
-            <div className="container mx-auto px-4 md:px-8 pt-8 md:pt-16">
+            <div className="mx-auto px-4 md:px-8 pt-8 md:pt-16">
                 <Text type="h1" className="text-4xl font-bold">GradeSync Plans</Text>
             </div>
+            <div className="mr-auto ml-auto md:px-8 pt-3">
+                <Text type="p">Find the perfect plan for your educational needs</Text>
+            </div>
+
             <div className="flex flex-col md:flex-row justify-center gap-6 md:gap-8 lg:gap-16 px-4 py-8 md:py-16">
                 {/* First card*/}
                 <div className="bg-mediumgray w-full md:w-80 lg:w-96 rounded-3xl border-3 border-mediumlight-gray transform-gpu transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:translate-y-2 hover:bg-opacity-90">
@@ -154,8 +158,6 @@ export const PricingLP = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Footer */}
             <div className="mt-auto">
                 <Footer />
             </div>
