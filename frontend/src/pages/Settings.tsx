@@ -1,4 +1,4 @@
-import {Button} from "../components/Button.tsx";
+import {Button} from "../components/ui/Button.tsx";
 import {useUserStore} from "../stores/userStore.ts";
 
 export const Settings = () => {

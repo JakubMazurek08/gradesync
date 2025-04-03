@@ -1,4 +1,4 @@
-import {Text} from "../components/Text.tsx";
+import {Text} from "../components/ui/Text.tsx";
 import {useEffect, useState} from "react";
 import {useUserStore} from "../stores/userStore.ts";
 // import {Button} from "../components/Button.tsx";

@@ -1,4 +1,4 @@
-import {Pool} from "pg";
+import {Pool, PoolClient} from "pg";
 import {ENV} from "./env";
 
 export const dbClient = new Pool({

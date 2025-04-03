@@ -1,10 +1,9 @@
-import {Grade} from "../components/Grade.tsx";
+import {useUserStore} from "../stores/userStore.ts";
+import { StudentGradesPage } from "./StudentGradesPage.tsx";
+import { TeacherGradesPage } from "./TeacherGradesPage.tsx";
 
 export const GradesPage = () => {
-    return(
-        <>
-            <Grade value={50}/>
-            <Grade value={75}/>
-        </>
-    )
+    const {isTeacher} = useUserStore();
+
+    return(isTeacher ? <TeacherGradesPage/> : <StudentGradesPage/>);
 }

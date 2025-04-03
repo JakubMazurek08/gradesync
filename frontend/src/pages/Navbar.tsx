@@ -1,13 +1,13 @@
 import {Outlet} from "react-router-dom";
-import {Text} from "../components/Text.tsx";
-import {Stars, Calendar, Book, Clock, Message, Settings, Hamburger} from "../components/Icons.tsx";
+import {Text} from "../components/ui/Text.tsx";
+import {Stars, Calendar, Book, Clock, Message, Settings, Hamburger} from "../components/ui/Icons.tsx";
 import {useEffect, useState} from "react";
-import {NavbarButton} from "../components/NavbarButton.tsx";
+import {NavbarButton} from "../components/ui/NavbarButton.tsx";
 import {LoginPage} from "./LoginPage.tsx";
 import {useUserStore} from "../stores/userStore";
 
 export const Navbar = () => {
-    const {userId, setUserId} = useUserStore();
+    const {userId, setUserId, setIsTeacher} = useUserStore();
     const [hamburgerToggle, setHamburgerToggle] = useState<boolean>(false);
 
     useEffect(() => {
@@ -15,8 +15,9 @@ export const Navbar = () => {
             method: 'GET',
             credentials: 'include'
         })
-            .then(res => (res.json().then(data => setUserId(data.id))))
-            .catch(error => console.error('Error fetching user data:', error));
+            .then(res => (res.json().then(data => {setUserId(data.id); setIsTeacher(data.isTeacher);
+                console.log(data.isTeacher);}))
+            .catch(error => console.error('Error fetching user data:', error)))
     }, []);
 
     return (
@@ -50,7 +51,7 @@ export const Navbar = () => {
             </aside>
 
 
-            <main className={'lg:sm:pl-80'}>
+            <main className={'lg:pl-80 lg:pt-0 pt-20'}>
                 {userId ? <Outlet/> : <LoginPage/>}
             </main>
         </>

@@ -1,8 +1,8 @@
-import { Input } from "../components/Input.tsx";
-import { Button } from "../components/Button";
+import { Input } from "../components/ui/Input.tsx";
+import { Button } from "../components/ui/Button.tsx";
 import { useState } from "react";
 import { useUserStore } from "../stores/userStore.ts";
-import { Text } from "../components/Text.tsx";
+import { Text } from "../components/ui/Text.tsx";
 import { useForm } from "react-hook-form";
 
 type FormFields = {
@@ -11,6 +11,7 @@ type FormFields = {
     email?: string;
     repeatPassword?: string;
     fullName?: string;
+    isTeacher?: boolean;
 };
 
 export const LoginPage = () => {
@@ -40,7 +41,7 @@ export const LoginPage = () => {
                 res.json().then((data) => setUserId(data.id))
             );
         } else {
-            const URL = import.meta.env.VITE_URL + "user/register";
+            const URL = import.meta.env.VITE_URL + "login/register";
             fetch(URL, {
                 method: "POST",
                 headers: {
@@ -52,6 +53,7 @@ export const LoginPage = () => {
                     password: data.password,
                     email: data.email,
                     fullName: data.fullName,
+                    isTeacher: data.isTeacher,
                 }),
             }).then((res) =>
                 res.json().then((data) => setUserId(data.id))
@@ -62,7 +64,7 @@ export const LoginPage = () => {
     return (
         <main className="w-full flex flex-col items-center">
             <form
-                className="w-100 flex items-center flex-col gap-10 m-16"
+                className="lg:w-100 flex items-center flex-col gap-10 mt-16"
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <div className="flex flex-col items-center">
@@ -92,7 +94,13 @@ export const LoginPage = () => {
                         <Text type="h4">Login</Text>
                         <Input
                             type="large"
-                            {...register("login", {required: "Login is required"})}
+                            {...register("login",
+                                {required: "Login is required",
+                                minLength: {
+                                    value: 4,
+                                    message: "Login must be at least 4 characters"
+                                }
+                                })}
                             placeholder="type here..."
                         />
                         {errors?.login && <Text>{errors.login.message}</Text>}
@@ -155,6 +163,11 @@ export const LoginPage = () => {
                                     placeholder="e.g., John Doe"
                                 />
                                 {errors?.fullName && <Text>{errors.fullName.message}</Text>}
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                                <input {...register('isTeacher')} className='size-6' type='checkbox'/>
+                                <Text type='small'>Make teacher account?</Text>
                             </div>
                         </>
                     )}

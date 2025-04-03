@@ -1,0 +1,17 @@
+import {Text} from "../components/ui/Text.tsx";
+import {Grade} from "../components/ui/Grade.tsx";
+
+export const StudentGradesPage = () => {
+    return (
+        <main className="p-5 lg:p-0 lg:px-[10vw] lg:pt-14">
+            <div className='w-full flex justify-between'>
+                <Text type='h1'>Grades</Text>
+                <div className='flex items-center gap-6'>
+                    <Text type='h3'>Average:</Text>
+                    <Grade size='large' value={90}/>
+                </div>
+            </div>
+
+        </main>
+    )
+}
