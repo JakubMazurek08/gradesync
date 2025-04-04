@@ -9,7 +9,6 @@ type FormFields = {
     login: string;
     password: string;
     email?: string;
-    repeatPassword?: string;
     fullName?: string;
     isTeacher?: boolean;
 };

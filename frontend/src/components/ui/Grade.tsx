@@ -57,7 +57,7 @@ export const Grade = ({value, size = 'medium'}:GradeProps) => {
 
     return (
         <div
-            className={`flex items-center justify-center ${sizeMap[size]} rounded-full`}
+            className={`flex items-center justify-center shrink-0 ${sizeMap[size]} rounded-full`}
             style={{
                 background: `conic-gradient(from 0deg, ${getGradientColor(value)} ${gradientPercentage}, #3C3C3C ${gradientPercentage})`,
             }}
