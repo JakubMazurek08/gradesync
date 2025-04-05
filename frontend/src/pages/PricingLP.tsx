@@ -143,7 +143,7 @@ export const PricingLP = () => {
                             <Text type="h3">Question about pricing?</Text>
                         </div>
                         <div>
-                            <Text type="h4" className="font-medium">
+                            <Text type="h4">
                                 Talk to us for more information about features, sizing, <br className="hidden md:block" />
                                 support plans, and consulting.
                             </Text>
