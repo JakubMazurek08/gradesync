@@ -8,7 +8,7 @@ export const PricingLP = () => {
         <div className="flex flex-col min-h-screen">
             <div className="hidden md:block"><NavBar /></div>
             <div className="mx-auto px-4 md:px-8 pt-8 md:pt-16">
-                <Text type="h1" className="text-4xl font-bold">GradeSync Plans</Text>
+                <Text type="h1">GradeSync Plans</Text>
             </div>
             <div className="mr-auto ml-auto md:px-8 pt-3">
                 <Text type="p">Find the perfect plan for your educational needs</Text>
@@ -19,10 +19,10 @@ export const PricingLP = () => {
                 <div className="bg-mediumgray w-full md:w-80 lg:w-96 rounded-3xl border-3 border-mediumlight-gray transform-gpu transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:translate-y-2 hover:bg-opacity-90">
                     <div className='p-6 pt-12'>
                         <div>
-                            <Text type='h3' className="font-bold">FREE</Text>
+                            <Text type='h3'>FREE</Text>
                         </div>
                         <div className='pt-4'>
-                            <Text type='h4' className="font-semibold">$0/month</Text>
+                            <Text type='h4'>$0/month</Text>
                         </div>
                         <div className='pt-8'>
                             <Text type='p'>Limited platform for tracking grades</Text>
@@ -44,7 +44,7 @@ export const PricingLP = () => {
                         </div>
                         <Link to="/">
                             <div className="bg-mediumlight-gray w-full md:w-4/5 lg:w-70 h-14 mt-14 mx-auto flex items-center justify-center rounded-2xl shadow-lg transition-all duration-300 hover:scale-105 hover:bg-purple-500 hover:text-white hover:shadow-2xl hover:translate-y-1">
-                                <Text type="p" className="font-medium">Try Free →</Text>
+                                <Text type="p">Try Free →</Text>
                             </div>
                         </Link>
                     </div>
@@ -54,10 +54,10 @@ export const PricingLP = () => {
                 <div className="bg-mediumgray w-full md:w-80 lg:w-96 rounded-3xl border-3 border-mediumlight-gray transform-gpu transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:translate-y-2 hover:bg-opacity-90">
                     <div className='p-6 pt-12'>
                         <div>
-                            <Text type='h3' className="font-bold">Dedicated</Text>
+                            <Text type='h3'>Dedicated</Text>
                         </div>
                         <div className='pt-4'>
-                            <Text type='h4' className="font-semibold">$10/month</Text>
+                            <Text type='h4'>$10/month</Text>
                         </div>
                         <div className='pt-8'>
                             <Text type='p'>Enhanced platform for comprehensive tracking</Text>
@@ -86,7 +86,7 @@ export const PricingLP = () => {
                         </div>
                         <Link to="/">
                             <div className="bg-mediumlight-gray w-full md:w-4/5 lg:w-70 h-14 mt-8 mx-auto flex items-center justify-center rounded-2xl shadow-lg transition-all duration-300 hover:scale-105 hover:bg-purple-500 hover:text-white hover:shadow-2xl hover:translate-y-1">
-                                <Text type="p" className="font-medium">Get Started →</Text>
+                                <Text type="p">Get Started →</Text>
                             </div>
                         </Link>
                     </div>
@@ -96,10 +96,10 @@ export const PricingLP = () => {
                 <div className="bg-mediumgray w-full md:w-80 lg:w-96 rounded-3xl border-3 border-mediumlight-gray transform-gpu transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:translate-y-2 hover:bg-opacity-90">
                     <div className='p-6 pt-12'>
                         <div>
-                            <Text type='h3' className="font-bold">For Team</Text>
+                            <Text type='h3'>For Team</Text>
                         </div>
                         <div className='pt-4'>
-                            <Text type='h4' className="font-semibold">$49/month</Text>
+                            <Text type='h4'>$49/month</Text>
                         </div>
                         <div className='pt-8'>
                             <Text type='p'>Complete platform with team collaboration</Text>
@@ -128,7 +128,7 @@ export const PricingLP = () => {
                         </div>
                         <Link to="/">
                             <div className="bg-mediumlight-gray w-full md:w-4/5 lg:w-70 h-14 mt-8 mx-auto flex items-center justify-center rounded-2xl shadow-lg transition-all duration-300 hover:scale-105 hover:bg-purple-500 hover:text-white hover:shadow-2xl hover:translate-y-1">
-                                <Text type="p" className="font-medium">Get Started →</Text>
+                                <Text type="p">Get Started →</Text>
                             </div>
                         </Link>
                     </div>
@@ -140,7 +140,7 @@ export const PricingLP = () => {
                 <div className="bg-mediumgray w-full md:w-4/5 lg:w-370 rounded-3xl flex flex-col md:flex-row justify-between p-6 md:p-10 mb-8 md:mb-16 lg:mb-40 mx-auto">
                     <div className="flex flex-col mb-6 md:mb-0">
                         <div className="mb-4 md:mb-6">
-                            <Text type="h3" className="font-bold">Question about pricing?</Text>
+                            <Text type="h3">Question about pricing?</Text>
                         </div>
                         <div>
                             <Text type="h4" className="font-medium">

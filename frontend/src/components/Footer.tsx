@@ -9,7 +9,7 @@ export const Footer = () => {
                         <img src="/GradeSyncLogoDarkSmall.png" alt="logo" className="h-16" />
                     </div>
                     <div className="text-center">
-                        <Text type='h3' className="text-xl font-semibold">About</Text>
+                        <Text type='h3'>About</Text>
                         <ul className="mt-3 space-y-2">
                             <li className="py-1 text-base text-lightgray hover:text-white transition-colors">System</li>
                             <li className="py-1 text-base text-lightgray hover:text-white transition-colors">Features</li>
@@ -20,7 +20,7 @@ export const Footer = () => {
                         </ul>
                     </div>
                     <div className="text-center">
-                        <Text type='h3' className="text-xl font-semibold">Headquarters</Text>
+                        <Text type='h3'>Headquarters</Text>
                         <ul className="mt-3 space-y-2">
                             <li className="py-1 text-base text-lightgray">1614 Santa Monica Blvd, Santa Monica, CA 90404</li>
                             <li className="py-1 text-base text-lightgray">+1 (312) 555-8392</li>
@@ -29,7 +29,7 @@ export const Footer = () => {
                         </ul>
                     </div>
                     <div className="text-center">
-                        <Text type='h3' className="text-xl font-semibold">Pricing</Text>
+                        <Text type='h3'>Pricing</Text>
                         <ul className="mt-3">
                             <li className="py-1 text-base text-lightgray hover:text-white transition-colors">Pricing site</li>
                         </ul>
@@ -40,7 +40,7 @@ export const Footer = () => {
                         <img src="/GradeSyncLogoDarkSmall.png" alt="logo" className="h-20" />
                     </div>
                     <div>
-                        <Text type='h3' className="text-xl font-semibold">About</Text>
+                        <Text type='h3'>About</Text>
                         <ul className="mt-4 space-y-2">
                             <li className="py-1 text-base text-lightgray hover:text-white transition-colors cursor-pointer">System</li>
                             <li className="py-1 text-base text-lightgray hover:text-white transition-colors cursor-pointer">Features</li>
@@ -51,7 +51,7 @@ export const Footer = () => {
                         </ul>
                     </div>
                     <div>
-                        <Text type='h3' className="text-xl font-semibold">Headquarters</Text>
+                        <Text type='h3'>Headquarters</Text>
                         <ul className="mt-4 space-y-2">
                             <li className="py-1 text-base text-lightgray">1614 Santa Monica Blvd, Santa Monica, CA 90404</li>
                             <li className="py-1 text-base text-lightgray">+1 (312) 555-8392</li>
@@ -60,7 +60,7 @@ export const Footer = () => {
                         </ul>
                     </div>
                     <div>
-                        <Text type='h3' className="text-xl font-semibold">Pricing</Text>
+                        <Text type='h3'>Pricing</Text>
                         <ul className="mt-4">
                             <li className="py-1 text-base text-lightgray hover:text-white transition-colors cursor-pointer">Pricing site</li>
                         </ul>
