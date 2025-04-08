@@ -79,8 +79,8 @@ export const CoursesList = ({setAverage}:{setAverage: (arg0: number) => (void)})
                             <Course key={course.courseId} course={course} /> ))}
                         </div>
 
-                        <div className='flex items-center gap-2'><Button size='small' onClick={goToPreviousPage}>Prev</Button>
-                            <Text type='small'> Page {currentPage} of {totalPages} </Text>
+                        <div className='flex items-center justify-center w-full gap-2'><Button size='small' onClick={goToPreviousPage}>Prev</Button>
+                            <Text type='p'> {currentPage} of {totalPages} </Text>
                             <Button size='small' onClick={goToNextPage}>Next</Button>
                         </div>
                     </>
