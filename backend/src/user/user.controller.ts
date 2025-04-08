@@ -1,12 +1,7 @@
 import express, {Request, Response} from "express";
 import {dbClient} from "../config/database";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import {ENV} from "../config/env";
 
 export const userController = express.Router();
-
-const secret = ENV.AUTHENTICATION.SECRET;
 
 userController.get("/firstName/:id", async (req: Request, res: Response) => {
     const requestedId = req.params.id;

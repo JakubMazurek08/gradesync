@@ -3,6 +3,7 @@ import {Dashboard} from "./pages/Dashboard.tsx"
 import {Navbar} from "./pages/Navbar.tsx";
 import {GradesPage} from "./pages/GradesPage.tsx";
 import {Settings} from "./pages/Settings.tsx";
+import {CalendarPage} from "./pages/CalendarPage.tsx";
 
 const router = createBrowserRouter([
     {
@@ -15,11 +16,19 @@ const router = createBrowserRouter([
             },
             {
                 path: '/grades',
-                element: <GradesPage/>
+                element: <GradesPage />
+            },
+            {
+                path: '/grades/:course',
+                element: <GradesPage />
             },
             {
                 path: '/settings',
                 element: <Settings/>
+            },
+            {
+                path: '/calendar',
+                element: <CalendarPage/>
             }
         ]
     },

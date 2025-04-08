@@ -92,7 +92,6 @@ export const LoginPage = () => {
                     <div className="w-full">
                         <Text type="h4">Login</Text>
                         <Input
-                            type="large"
                             {...register("login",
                                 {required: "Login is required",
                                 minLength: {
@@ -101,6 +100,7 @@ export const LoginPage = () => {
                                 }
                                 })}
                             placeholder="type here..."
+                            inputSize="large"
                         />
                         {errors?.login && <Text>{errors.login.message}</Text>}
                     </div>
@@ -108,7 +108,8 @@ export const LoginPage = () => {
                     <div className="w-full">
                         <Text type="h4">Password</Text>
                         <Input
-                            type="large"
+                            inputSize="large"
+                            type="password"
                             {...register("password", {
                                 required: "Password is required",
                                 minLength: {
@@ -126,7 +127,7 @@ export const LoginPage = () => {
                             <div className="w-full">
                                 <Text type="h4">Email</Text>
                                 <Input
-                                    type="large"
+                                    inputSize="large"
                                     {...register("email", {
                                         required: "Email is required",
                                         pattern: {
@@ -142,7 +143,7 @@ export const LoginPage = () => {
                             <div className="w-full">
                                 <Text type="h4">Full Name</Text>
                                 <Input
-                                    type="large"
+                                    inputSize="large"
                                     {...register("fullName", {
                                         required: "Full name is required",
                                         validate: (value) => {

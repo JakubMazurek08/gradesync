@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {NavbarButton} from "../components/ui/NavbarButton.tsx";
 import {LoginPage} from "./LoginPage.tsx";
 import {useUserStore} from "../stores/userStore";
+import {Link} from "react-router-dom";
 
 export const Navbar = () => {
     const {userId, setUserId, setIsTeacher} = useUserStore();
@@ -25,20 +26,20 @@ export const Navbar = () => {
         <>
             {hamburgerToggle ? <button onClick={() => {
                 setHamburgerToggle(false)
-            }} className={"bg-lightgray transition-all duration-1000 opacity-5 h-screen w-screen fixed"}></button> : null}
+            }} className={"bg-lightgray transition-all duration-1000 opacity-5 h-screen w-screen fixed z-10"}></button> : null}
 
 
-            <nav className="lg:hidden fixed w-screen h-20 flex flex-row-reverse justify-between px-5 sm:px-10">
+            <nav className="lg:hidden fixed w-screen h-24 flex flex-row-reverse justify-between px-5 sm:px-10 bg-background">
                 <button className='text-white' onClick={() => {
                     setHamburgerToggle(true)
                 }}><Hamburger/></button>
-                <img className='' src='/GradeSyncLogoDarkSmall.png' alt='GradeSync'/>
+                <img src='/GradeSyncLogoDarkSmall.png' alt='GradeSync'/>
             </nav>
 
             <aside
-                className={` w-80 flex h-screen bg-darkgray fixed p-4 flex-col justify-between ${hamburgerToggle ? 'translate-x-0' : '-translate-x-80'} lg:translate-x-0 duration-300 transition-all`}>
+                className={`z-20 w-80 flex h-screen bg-darkgray fixed p-4 flex-col justify-between ${hamburgerToggle ? 'translate-x-0' : '-translate-x-80'} lg:translate-x-0 duration-300 transition-all`}>
                 <div>
-                    <img className='w-[270px]' src='/GradeSyncLogoDarkMedium.png' alt='GradeSync'/>
+                    <Link to={'/'}><img className='w-[270px] cursor-pointer' src='/GradeSyncLogoDarkMedium.png' alt='GradeSync'/></Link>
                     <div className='flex flex-col gap-2 mt-10'>
                         <NavbarButton url='/'> <Stars/> <Text type='nav'>Dashboard</Text></NavbarButton>
                         <NavbarButton url='/grades'> <Calendar/> <Text type='nav'>Grades</Text></NavbarButton>
@@ -52,7 +53,7 @@ export const Navbar = () => {
             </aside>
 
 
-            <main className={'lg:pl-80 lg:pt-0 pt-20'}>
+            <main className={'lg:pl-80 lg:pt-0 pt-24'}>
                 {userId ? <Outlet/> : <LoginPage/>}
             </main>
         </>
