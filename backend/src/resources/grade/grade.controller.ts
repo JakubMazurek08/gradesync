@@ -1,6 +1,6 @@
 import express, {Request, Response} from "express";
-import {dbClient} from "../config/database";
-import {authenticationMiddleware} from "../middleware/authentication.middleware";
+import {dbClient} from "../../config/database";
+import {authenticationMiddleware} from "../../middleware/authentication.middleware";
 
 
 export const gradeController = express.Router();

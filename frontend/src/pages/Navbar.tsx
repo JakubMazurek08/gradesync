@@ -10,7 +10,6 @@ import {Link} from "react-router-dom";
 export const Navbar = () => {
     const {userId, setUserId, setIsTeacher} = useUserStore();
     const [hamburgerToggle, setHamburgerToggle] = useState<boolean>(false);
-
     useEffect(() => {
         const URL = import.meta.env.VITE_URL + "login";
 
@@ -26,10 +25,10 @@ export const Navbar = () => {
         <>
             {hamburgerToggle ? <button onClick={() => {
                 setHamburgerToggle(false)
-            }} className={"bg-lightgray transition-all duration-1000 opacity-5 h-screen w-screen fixed z-10"}></button> : null}
+            }} className={"bg-lightgray transition-all duration-1000 opacity-5 h-screen w-screen fixed z-20"}></button> : null}
 
 
-            <nav className="lg:hidden fixed w-screen h-24 flex flex-row-reverse justify-between px-5 sm:px-10 bg-background">
+            <nav className="lg:hidden fixed w-screen h-24 flex flex-row-reverse justify-between px-5 sm:px-10 bg-background z-10">
                 <button className='text-white' onClick={() => {
                     setHamburgerToggle(true)
                 }}><Hamburger/></button>

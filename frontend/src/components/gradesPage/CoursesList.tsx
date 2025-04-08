@@ -69,19 +69,21 @@ export const CoursesList = ({setAverage}:{setAverage: (arg0: number) => (void)})
     }, [selectedCourse, courses, currentPage]);
 
     return (
-        <div className={`max-w-100 w-fit border-r-0 sm:border-r-1 border-lightgray pr-0 lg:pr-20 ${!course? 'block' : 'hidden sm:block'}`}>
+        <div className={`w-80 h-full xl:w-100 shrink-0 border-r-0 sm:border-r-1 border-lightgray pr-0 lg:pr-20 ${!course? 'block' : 'hidden sm:block'}`}>
             <Input onChange={(e) => setSelectedCourse(e.target.value)} placeholder='search...' />
-            <div className='flex flex-col gap-6 mt-10'>
-                {courses[0] ? (<>
-                            {
-                    sortedCourses.map(course => (
-                            <Course key={course.courseId} course={course} />
-                        ))
-                            }
-                            <div className='flex items-center gap-2'><Button size='small' onClick={goToPreviousPage}>Prev</Button>
-                                <Text type='small'> Page {currentPage} of {totalPages} </Text>
-                                <Button size='small' onClick={goToNextPage}>Next</Button></div>
-                        </>
+            <div className='flex flex-col h-full justify-between mt-10 gap-10'>
+                {courses[0] ? (
+                    <>
+                        <div className='flex flex-col gap-6'>
+                            {sortedCourses.map(course => (
+                            <Course key={course.courseId} course={course} /> ))}
+                        </div>
+
+                        <div className='flex items-center gap-2'><Button size='small' onClick={goToPreviousPage}>Prev</Button>
+                            <Text type='small'> Page {currentPage} of {totalPages} </Text>
+                            <Button size='small' onClick={goToNextPage}>Next</Button>
+                        </div>
+                    </>
                 ):
                     <Text>loading...</Text>
                 }

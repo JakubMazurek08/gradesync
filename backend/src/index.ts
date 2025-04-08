@@ -3,9 +3,11 @@ import cors from 'cors';
 import {connectDB, dbClient} from "./config/database";
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import {loginController} from "./authentication/login.controller";
-import {userController} from "./user/user.controller";
-import {gradeController} from "./grade/grade.controller";
+import {loginController} from "./resources/authentication/login.controller";
+import {userController} from "./resources/user/user.controller";
+import {gradeController} from "./resources/grade/grade.controller";
+import {loggerMiddleware} from "./middleware/logger.middleware";
+import {schoolController} from "./resources/school/school.controller";
 
 const port = 3000;
 
@@ -19,10 +21,12 @@ app.use(cors({
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(loggerMiddleware);
 
 app.use('/login', loginController);
 app.use('/user', userController);
 app.use('/grade', gradeController);
+app.use('/school', schoolController);
 
 connectDB().then(() => {
     app.listen(port, () => {

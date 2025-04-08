@@ -12,7 +12,7 @@ export const StudentGradesPage = () => {
     const navigate = useNavigate();
 
     return (
-        <main className="p-5 lg:p-0 lg:px-[5vw] lg:pt-14">
+        <main className="p-5 h-full lg:p-0 lg:px-[5vw] lg:pt-14">
             <div className={`w-full ${course?'hidden sm:flex' : 'flex'} flex-col sm:flex-row justify-between`}>
                 <Text type='h1'>Grades</Text>
                 <div className='flex items-center gap-6'>

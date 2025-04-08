@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken";
 import express, {Request, Response} from "express";
-import {ENV} from "../config/env";
-import {dbClient} from "../config/database";
-import {authenticationMiddleware} from "../middleware/authentication.middleware";
+import {ENV} from "../../config/env";
+import {dbClient} from "../../config/database";
+import {authenticationMiddleware} from "../../middleware/authentication.middleware";
 import bcrypt from "bcrypt"
 import {plainToInstance} from "class-transformer";
 import {RegisterDto} from "./dto/register.dto";
-import {validationMiddleware} from "../middleware/validation.middleware";
+import {validationMiddleware} from "../../middleware/validation.middleware";
 
 export const loginController = express.Router();
 
