@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const NavBar = () => {
   return (
-    <div className="bg-gray-950 h-20 border-b-2 border-white flex flex-row justify-between items-center px-5">
+    <div className="bg-gray-950 h-20 border-b-2 border-lightgray flex flex-row justify-between items-center px-5">
       <Link to="/landingpage">
         <img src="/GradeSyncLogoDarkSmall.png" alt="LOGO" className="h-10" />
       </Link>

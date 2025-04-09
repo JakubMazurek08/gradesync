@@ -12,9 +12,9 @@ const FeatureCard = ({ title, description, icon }) => {
   return (
     <div
       ref={cardRef}
-      className="feature-card bg-[#1e293b] rounded-xl p-6 shadow-lg flex flex-col h-full overflow-hidden"
+      className="feature-card bg-mediumgray border-mediumlight-gray border-2 rounded-xl p-6 shadow-lg flex flex-col h-full overflow-hidden"
     >
-      <div className="text-purple-500 mb-4">{icon}</div>
+      <div className="text-purple-400 mb-4">{icon}</div>
       <Text type="h4">{title}</Text>
       <Text>
         <span className="text-sm"></span>
@@ -126,7 +126,7 @@ export const FeaturesSection: React.FC = () => {
           stagger: 0.2,
           ease: "back.out(1.7)",
         },
-        "-=0.4"
+        "-=1.6"
       );
 
       cards.forEach((card) => {
@@ -167,13 +167,13 @@ export const FeaturesSection: React.FC = () => {
       <div className="text-center mb-12 md:mb-16 max-w-xl">
         <h2
           ref={titleRef}
-          className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4"
+          className="text-3xl md:text-4xl lg:text-5xl font-bold text-lightgray mb-4"
         >
           Why Choose GradeSync?
         </h2>
         <p
           ref={subtitleRef}
-          className="text-base md:text-lg text-gray-300 px-4"
+          className="text-base md:text-lg text-lightgray px-4"
         >
           Our platform provides everything you need to excel in your academic
           journey
