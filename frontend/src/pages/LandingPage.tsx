@@ -4,11 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { FeaturesSection } from "../components/FeaturesSection";
 import { Footer } from "../components/Footer";
-import { Link } from "react-router-dom";
 
 export const LandingPage = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   const [typewriterText, setTypewriterText] = useState("TRACK");
   const typewriterWords = ["TRACK", "SYNC", "SUCCEED!"];
   const typewriterIndex = useRef(0);
@@ -19,10 +16,6 @@ export const LandingPage = () => {
   const descriptionRef = useRef<HTMLSpanElement | null>(null);
   const headingRef = useRef<HTMLSpanElement | null>(null);
   const typewriterRef = useRef<HTMLSpanElement | null>(null);
-
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
 
   useEffect(() => {
     const typewriterInterval = setInterval(() => {
@@ -111,50 +104,9 @@ export const LandingPage = () => {
       <div className="bg-[url(/LandingPageBgImage.png)] bg-center h-screen max-w-[100vw] bg-cover lg:bg-[length:115%] flex flex-col relative">
         <div className="block bg-black opacity-70 absolute inset-0 z-0 h-screen"></div>
 
-        <div className="hidden lg:block relative z-10 max-w-[100vw]">
+        <div className="relative z-20 max-w-[100vw]">
           <NavBar />
         </div>
-
-        <div className="flex flex-row justify-between px-4 pt-4 lg:hidden relative z-10 max-w-[100vw] md:pt-7 md:px-7">
-          <img
-            src="/GradeSyncLogoDarkSmall.png"
-            alt="LOGO"
-            className="h-8 md:h-12"
-          />
-          <img
-            src="/menu.png"
-            alt="MENU"
-            className="h-8 md:h-12 cursor-pointer"
-            onClick={toggleMobileMenu}
-          />
-        </div>
-
-        {mobileMenuOpen && (
-          <div className="fixed inset-0 bg-black z-20 flex flex-col items-center pt-20">
-            <div className="absolute top-4 right-4 md:top-7 md:right-7">
-              <button
-                onClick={toggleMobileMenu}
-                className="text-white text-3xl font-bold"
-              >
-                ✕
-              </button>
-            </div>
-            <div>
-              <div className="flex flex-col items-center space-y-6 md:hidden">
-                <Link to="/pricing">
-                  <Text>Pricing</Text>
-                </Link>
-                <Text>Login/sign up</Text>
-              </div>
-              <div className="hidden md:flex md:flex-col md:items-center md:space-y-9 ">
-                <Link to="/pricing">
-                  <Text type="h3">Pricing</Text>
-                </Link>
-                <Text type="h3">Login/sign up</Text>
-              </div>
-            </div>
-          </div>
-        )}
 
         <div className="relative z-10 h-full w-full flex flex-col md:flex-col lg:flex-row justify-center px-6 md:px-8">
           <div className="w-full md:w-full lg:w-1/2 flex justify-center items-center mb-8 md:mb-8 lg:pb-50">
