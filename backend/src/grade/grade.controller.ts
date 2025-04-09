@@ -1,4 +1,4 @@
-import express, {Request, Response} from "express";
+import express, {request, Request, Response} from "express";
 import {dbClient} from "../config/database";
 import {authenticationMiddleware} from "../middleware/authentication.middleware";
 
@@ -34,4 +34,43 @@ gradeController.get('/courses', authenticationMiddleware, async (req:Request, re
 
 })
 
+// gradeController.post('/grades', authenticationMiddleware, async (request: Request, response: Response) => {
+//     console.log('adding new grade');
+//     if(!request.userId){
+//         response.status(401).send({error: "unauthorized"});
+//     }
+//
+//     const { value, title, category, studentId, courseId } = request.body;
+//
+//     if (!studentId || !courseId || value === undefined) {
+//         response.status(400).send({msg: "Fields StudentId or courseId or value are required!!" });
+//     }
+//
+//     const newGrade = parseFloat(value);
+//     if (newGrade < 0 || newGrade > 100 || isNaN(newGrade)) {
+//         response.status(400).send({msg: "Grade must be a number between 0 and 100"});
+//     }
+//
+//     try {
+//         const result = await dbClient.query(
+//             `INSERT INTO grades (value, title, category, student_id, course_id, created_at)
+//              VALUES ($1, $2, $3, $4, $5, NOW())`,
+//         );
+//         response.status(201).send(result.rows[0]);
+//     } catch (err) {
+//         response.status(500).send({msg: 'internal server error', err: err});
+//     }
+// });
 
+// gradeController.patch('/skibidi2', authenticationMiddleware, async (request: Request, response: Response) => {
+//     console.log('abc3');
+//     if(!request.userId){
+//         response.status(401).send({error: "unauthorized"});
+//     }
+//     try {
+//         const result = await dbClient.query(``);
+//         response.send(result.rows);
+//     } catch (err) {
+//         response.status(500).send({msg: 'internal server error', err:err});
+//     }
+// })
