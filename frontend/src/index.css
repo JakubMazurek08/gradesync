@@ -57,7 +57,7 @@ html{
     --fc-bg-event-color: rgb(143, 223, 130);
     --fc-bg-event-opacity: 0.3;
     --fc-highlight-color: rgba(188, 232, 241, 0.3);
-    --fc-today-bg-color: rgba(137, 40, 255, 0.1);
+    --fc-today-bg-color: rgba(255, 255, 255, 0.05);
     --fc-now-indicator-color: red;
 }
 
@@ -94,5 +94,9 @@ html{
 }
 
 .fc .fc-button-primary:focus{
+    box-shadow: none;
+}
+
+.fc-timegrid-event-harness-inset .fc-timegrid-event, .fc-timegrid-event.fc-event-mirror, .fc-timegrid-more-link{
     box-shadow: none;
 }
