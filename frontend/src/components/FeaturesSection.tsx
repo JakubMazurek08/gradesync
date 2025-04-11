@@ -6,7 +6,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const FeatureCard = ({ title, description, icon }) => {
+interface FeatureCardProps {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+}
+
+const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, icon }) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -59,6 +65,7 @@ export const FeaturesSection: React.FC = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
+  const decorationRef = useRef<HTMLDivElement>(null);
 
   const features = [
     {
@@ -104,6 +111,15 @@ export const FeaturesSection: React.FC = () => {
         subtitleRef.current,
         { y: 30, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8, ease: "back.out(1.7)" },
+        "-=0.6"
+      );
+    }
+
+    if (decorationRef.current) {
+      tl.fromTo(
+        decorationRef.current,
+        { width: 0 },
+        { width: "80px", duration: 0.8, ease: "power2.out" },
         "-=0.6"
       );
     }
@@ -171,6 +187,9 @@ export const FeaturesSection: React.FC = () => {
         >
           Why Choose GradeSync?
         </h2>
+        <div className="flex justify-center mb-6">
+          <div ref={decorationRef} className="h-1 bg-purple-400 rounded"></div>
+        </div>
         <p
           ref={subtitleRef}
           className="text-base md:text-lg text-lightgray px-4"

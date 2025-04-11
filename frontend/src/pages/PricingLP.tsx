@@ -6,7 +6,7 @@ import { Footer } from "../components/Footer.tsx";
 export const PricingLP = () => {
     return (
         <div className="flex flex-col min-h-screen">
-            <div className="hidden md:block">
+            <div className="md:block">
                 <NavBar />
             </div>
             <div className="container mx-auto px-4 md:px-8 pt-8 md:pt-16 text-center">
