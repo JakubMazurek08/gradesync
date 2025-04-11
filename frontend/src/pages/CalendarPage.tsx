@@ -18,8 +18,6 @@ type Assignment = {
     date: string,
 }
 
-
-
 export const CalendarPage = () => {
     const [events, setEvents] = useState<Course[]|Assignment[]>([]);
 
@@ -31,8 +29,6 @@ export const CalendarPage = () => {
             method: 'GET',
             credentials: 'include',
         }).then(res => res.json().then((data)=>{
-            console.log(data)
-
             const newEvent = data.timetable.flatMap((dayOfTheWeek:Course[], index:number) => {
                 return dayOfTheWeek.map(course => ({
                     title: course.courseName,
@@ -45,10 +41,10 @@ export const CalendarPage = () => {
 
             const newAssignmentsEvents = data.assignments.map((assignment: Assignment) => ({
                 title: `${assignment.name} - ${assignment.category}`,
-                start: `${assignment.date}T${assignment.startTime}`, // Combine date and start time
-                end: `${assignment.date}T${assignment.endTime}`,     // Combine date and end time
+                start: `${assignment.date}T${assignment.startTime}`,
+                end: `${assignment.date}T${assignment.endTime}`,
                 display: 'auto',
-                color: '#bd1616', // Red color for assignments
+                color: '#bd1616',
             }));
 
             setEvents([...newEvent, ...newAssignmentsEvents]);
