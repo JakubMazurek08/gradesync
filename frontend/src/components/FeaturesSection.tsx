@@ -1,4 +1,3 @@
-//
 import { Text } from "../components/Text";
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
