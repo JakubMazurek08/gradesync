@@ -13,7 +13,7 @@ type Course = {
     averageGrade: number,
 }
 
-export const CoursesList = ({setAverage}:{setAverage: (arg0: number) => (void)}) => {
+export const CoursesList = ({setAverage, isTeacher}:{setAverage?: (arg0: number) => (void), isTeacher: boolean,}) => {
     const [selectedCourse, setSelectedCourse] = useState('');
     const [courses, setCourses] = useState<Course[]>([]);
     const {course} = useParams();
@@ -36,15 +36,22 @@ export const CoursesList = ({setAverage}:{setAverage: (arg0: number) => (void)})
     };
 
     useEffect(() => {
-        const URL = import.meta.env.VITE_URL + "grade/courses";
-        fetch(URL, {
-            method: "GET",
-            credentials: "include",
-        }).then(res => {if(res.status===200)res.json().then((data: Course[]) => {
-            setCourses(data);
-            const sum = data.reduce((acc, course) => acc + Math.round(course.averageGrade), 0);
-            setAverage(Math.round(sum / data.length));
-        })});
+        if(!isTeacher){
+            const URL = import.meta.env.VITE_URL + "grade/courses";
+            fetch(URL, {
+                method: "GET",
+                credentials: "include",
+            }).then(res => {if(res.status===200)res.json().then((data: Course[]) => {
+                setCourses(data);
+                const sum = data.reduce((acc, course) => acc + Math.round(course.averageGrade), 0);
+                if(setAverage){
+                    setAverage(Math.round(sum / data.length));
+                }
+            })});
+        }else{
+
+        }
+
     }, []);
 
     const getSimilarityScore = (courseName: string, search: string): number => {
