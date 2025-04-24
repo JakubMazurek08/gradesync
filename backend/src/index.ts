@@ -8,6 +8,8 @@ import {userController} from "./resources/user/user.controller";
 import {gradeController} from "./resources/grade/grade.controller";
 import {loggerMiddleware} from "./middleware/logger.middleware";
 import {schoolController} from "./resources/school/school.controller";
+import {teacherController} from "./resources/teacher/teacher.controller";
+import {devController} from "./resources/dev/dev.controller";
 
 const port = 3000;
 
@@ -27,6 +29,8 @@ app.use('/login', loginController);
 app.use('/user', userController);
 app.use('/grade', gradeController);
 app.use('/school', schoolController);
+app.use('/teacher', teacherController);
+app.use('/dev', devController);
 
 connectDB().then(() => {
     app.listen(port, () => {

@@ -45,28 +45,24 @@ export const GradeDisplay = () => {
 
 
 
-    return <div className={`h-[calc(100vh-200px)] overflow-y-scroll w-full flex-col items-center sm:ml-10 xl:ml-20  ${course ? 'flex' : 'hidden sm:flex'}`}>
+    return <div className={`h-[calc(100vh-200px)] w-full flex-col items-center sm:ml-10 xl:ml-20  ${course ? 'flex' : 'hidden sm:flex'}`}>
         {
             !course ? <Text type='h3'> Select a course to see all grades... </Text> : !data ? <Text type='h3'> Loading... </Text> :
                 <>
                     <div className='w-full flex flex-col'>
                         <Text type={'h2'}>{capitalCase(data.courseName)}</Text>
                         <Text type={'p'}>{data.teacherFirstName} {data.teacherLastName}</Text>
-                    </div>
-                    <div className='flex flex-col lg:justify-between w-full mt-10 gap-4'>
-
-                        <div className='flex items-center gap-4 w-fit h-fit'>
+                        <div className='flex mt-2 items-center gap-4 w-fit h-fit'>
                             <Text type='h4'>Full Grade:</Text>
-                            <Grade size='large' value={fullGrade}/>
+                            <Grade value={fullGrade}/>
                         </div>
-
-                        <div className='w-full bg-darkgray p-6 rounded-2xl flex flex-col'>
-                            <GradeDisplayCategory category='test' grades={data.grades}/>
-                            <GradeDisplayCategory category='short_test' grades={data.grades}/>
-                            <GradeDisplayCategory grades={data.grades}/>
-                        </div>
-
                     </div>
+                    <div className='w-full overflow-y-scroll bg-darkgray p-2 rounded-2xl flex mt-10 flex-col'>
+                        <GradeDisplayCategory category='test' grades={data.grades}/>
+                        <GradeDisplayCategory category='short_test' grades={data.grades}/>
+                        <GradeDisplayCategory grades={data.grades}/>
+                    </div>
+
                 </>
         }
     </div>;

@@ -24,11 +24,11 @@ export const GradeDisplayCategory = ({category, grades} : GradeDisplayCategoryPr
     }
 
     if(filteredGrades[0]) {
-        return <div className="m-4">
+        return <div className="m-4 flex flex-col gap-2">
             <Text type='h4'>{category ? capitalCase(category) : 'Additional'}:</Text>
-            <div className="grid grid-cols-[repeat(auto-fit,_minmax(250px,_max-content))] gap-4">
+            <div className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_max-content))] gap-4">
                 {filteredGrades.map((grade) => (
-                    <div key={grade.gradeId} className="flex items-center gap-2 m-2 w-[250px]">
+                    <div key={grade.gradeId} className="flex items-center gap-2 w-[200px]">
                         <Grade size='small' value={grade.gradeValue}/>
                         <Text type='small'>{grade.gradeTitle}</Text>
                     </div>

@@ -4,6 +4,7 @@ import {Text} from "../ui/Text.tsx";
 import {Course} from "./Course.tsx";
 import {Button} from "../ui/Button.tsx";
 import {useParams} from "react-router-dom";
+import {TeacherCourse} from "./TeacherCourse.tsx";
 
 type Course = {
     courseId: number,
@@ -49,7 +50,14 @@ export const CoursesList = ({setAverage, isTeacher}:{setAverage?: (arg0: number)
                 }
             })});
         }else{
-
+            const URL = import.meta.env.VITE_URL + "teacher/courses"
+            fetch(URL,{
+                method: "GET",
+                credentials: "include",
+            }).then(res=>{if(res.status===200)res.json().then((data=>{
+                console.log(data);
+                setCourses(data)
+            }))})
         }
 
     }, []);
@@ -82,8 +90,13 @@ export const CoursesList = ({setAverage, isTeacher}:{setAverage?: (arg0: number)
                 {courses[0] ? (
                     <>
                         <div className='flex flex-col gap-6'>
-                            {sortedCourses.map(course => (
-                            <Course key={course.courseId} course={course} /> ))}
+                            {sortedCourses.map(course => {
+                                if(isTeacher){
+                                    return <TeacherCourse key={course.courseId} courseName={course.courseName} />
+                                }else{
+                                   return <Course key={course.courseId} course={course} />
+                                }
+                            })}
                         </div>
 
                         <div className='flex items-center justify-center w-full gap-2'><Button size='small' onClick={goToPreviousPage}>Prev</Button>
