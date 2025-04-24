@@ -12,7 +12,8 @@ teacherController.get('/courses', teacherAuthenticationMiddleware, async (req:Re
     try{
         const result = await dbClient.query(`
         SELECT c.id as "id",
-               c.course_name as "courseName"
+               c.course_name as "courseName",
+               c.start_year::text || '-' || c.end_year::text as "yearString"
         FROM Courses C 
         JOIN teachers T ON t.id  = c.teacher_id
         WHERE t.user_id = $1`, [req.userId]);

@@ -12,6 +12,7 @@ type Course = {
     teacherFirstName: string,
     teacherLastName: string,
     averageGrade: number,
+    yearString: string,
 }
 
 export const CoursesList = ({setAverage, isTeacher}:{setAverage?: (arg0: number) => (void), isTeacher: boolean,}) => {
@@ -84,30 +85,35 @@ export const CoursesList = ({setAverage, isTeacher}:{setAverage?: (arg0: number)
     }, [selectedCourse, courses, currentPage]);
 
     return (
-        <div className={`w-80 h-full xl:w-100 shrink-0 border-r-0 sm:border-r-1 border-lightgray pr-0 lg:pr-20 ${!course? 'block' : 'hidden sm:block'}`}>
-            <Input onChange={(e) => setSelectedCourse(e.target.value)} placeholder='search...' />
-            <div className='flex flex-col h-full justify-between mt-10 gap-10'>
-                {courses[0] ? (
-                    <>
-                        <div className='flex flex-col gap-6'>
-                            {sortedCourses.map(course => {
-                                if(isTeacher){
-                                    return <TeacherCourse key={course.courseId} courseName={course.courseName} />
-                                }else{
-                                   return <Course key={course.courseId} course={course} />
-                                }
-                            })}
-                        </div>
+        <div
+            className={`w-80 flex-col flex-grow justify-between xl:w-100 shrink-0 border-r-0 sm:border-r-1 border-lightgray pr-0 lg:pr-20 ${!course ? 'flex' : 'hidden sm:flex'}`}>
+            <div>
+                <Input onChange={(e) => setSelectedCourse(e.target.value)} placeholder='search...'/>
 
-                        <div className='flex items-center justify-center w-full gap-2'><Button size='small' onClick={goToPreviousPage}>Prev</Button>
-                            <Text type='p'> {currentPage} of {totalPages} </Text>
-                            <Button size='small' onClick={goToNextPage}>Next</Button>
-                        </div>
-                    </>
-                ):
-                    <Text>loading...</Text>
-                }
+                <div className='flex flex-col justify-between mt-10 gap-10'>
+                    {courses[0] ? (
+                            <>
+                                <div className='flex flex-col gap-6'>
+                                    {sortedCourses.map(course => {
+                                        if (isTeacher) {
+                                            return <TeacherCourse key={course.courseId} courseName={course.courseName}
+                                                                  yearString={course.yearString}/>
+                                        } else {
+                                            return <Course key={course.courseId} course={course}/>
+                                        }
+                                    })}
+                                </div>
+                            </>
+                        ) :
+                        <Text>loading...</Text>
+                    }
 
+                </div>
+            </div>
+            <div className='flex items-center justify-center w-full gap-2 justify-self-end'>
+                <Button size='small' onClick={goToPreviousPage}>Prev</Button>
+                <Text type='p'> {currentPage} of {totalPages} </Text>
+                <Button size='small' onClick={goToNextPage}>Next</Button>
             </div>
         </div>
     );

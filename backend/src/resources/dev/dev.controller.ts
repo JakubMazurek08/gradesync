@@ -56,6 +56,8 @@ devController.get('/reset', async (req:Request, res:Response) => {
                   course_name varchar not null,
                   teacher_id bigint references teachers (id),
                   schools_id bigint references schools (id),
+                  start_year int NOT NULL DEFAULT EXTRACT(YEAR FROM CURRENT_DATE)::int,
+                  end_year int NOT NULL DEFAULT (EXTRACT(YEAR FROM CURRENT_DATE)::int + 5),
                   created_at timestamp default current_timestamp
                 );
                 

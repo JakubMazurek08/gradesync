@@ -1,9 +1,5 @@
 import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
 import {Text} from "../ui/Text.tsx";
-import {Grade} from "../ui/Grade.tsx";
-import {GradeDisplayCategory} from "./GradeDisplayCategory.tsx";
-import {capitalCase} from "change-case";
 
 export const TeacherGradeDisplay = () => {
     const {course} = useParams();
