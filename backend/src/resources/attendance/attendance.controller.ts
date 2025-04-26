@@ -140,13 +140,15 @@ attendanceController.post('/', teacherAuthenticationMiddleware, async (request: 
     const { studentId, date, status } = request.body;
 
     if (!studentId || !date || !status) {
-        return response.status(400).send({ error: "studentId, date and status are required" });
+       response.status(400).send({ error: "studentId, date and status are required" });
+       return
     }
 
     // Validate status
     const validStatuses = ['present', 'absent_excused', 'absent_unexcused', 'late'];
     if (!validStatuses.includes(status)) {
-        return response.status(400).send({ error: `Invalid status. Must be one of: ${validStatuses.join(", ")}` });
+         response.status(400).send({ error: `Invalid status. Must be one of: ${validStatuses.join(", ")}` });
+         return
     }
 
     try {
