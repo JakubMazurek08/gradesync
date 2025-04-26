@@ -1,6 +1,8 @@
 import express, {request, Request, Response} from "express";
 import {dbClient} from "../../config/database";
 import {authenticationMiddleware} from "../../middleware/authentication.middleware";
+import {teacherAuthenticationMiddleware} from "../../middleware/teacherValidation.middleware";
+
 
 export const attendanceController = express.Router();
 
@@ -131,6 +133,34 @@ attendanceController.get('/date/:date', authenticationMiddleware, async (request
 
     } catch (error) {
         response.status(500).send({message: 'internal server error', error: error})
+    }
+});
+
+attendanceController.post('/', teacherAuthenticationMiddleware, async (request: Request, response: Response) => {
+    const { studentId, date, status } = request.body;
+
+    if (!studentId || !date || !status) {
+        return response.status(400).send({ error: "studentId, date and status are required" });
+    }
+
+    // Validate status
+    const validStatuses = ['present', 'absent_excused', 'absent_unexcused', 'late'];
+    if (!validStatuses.includes(status)) {
+        return response.status(400).send({ error: `Invalid status. Must be one of: ${validStatuses.join(", ")}` });
+    }
+
+    try {
+        // Insert attendance record
+        const result = await dbClient.query(`
+            INSERT INTO attendance (student_id, date, status)
+            VALUES ($1, $2, $3)
+            RETURNING id AS "attendanceId", student_id AS "studentId", date, status
+        `, [studentId, date, status]);
+
+        response.status(201).send(result.rows[0]);
+    } catch (error) {
+        console.error(error);
+        response.status(500).send({ message: 'internal server error', error: error });
     }
 });
 

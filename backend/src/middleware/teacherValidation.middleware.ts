@@ -1,47 +1,41 @@
-import type {Request, Response, NextFunction} from "express";
+import type {Request, Response, NextFunction} from 'express';
+import jwt, {JwtPayload} from "jsonwebtoken";
 import {ENV} from "../config/env";
 import {dbClient} from "../config/database";
 
-export const teacherValidationMiddleware = async (request: Request, response: Response, next: NextFunction) => {
-    if (!request.userId) {
-        response.status(401).json({error: 'Unauthorized'});
+const secret = ENV.AUTHENTICATION.SECRET;
+
+declare module "express" {
+    interface Request {
+        userId?: string | JwtPayload;
+    }
+}
+
+export const teacherAuthenticationMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+    const token = req.cookies?.token;
+
+    if (!token) {
+        res.status(401).json({ error: "Unauthorized" });
         return;
     }
-    const { courseId, studentId } = request.body;
-
-    if (!courseId || !studentId) {
-        response.status(400).json({error: "Missing studentId and courseId"});
-        return;
-    }
-
-    try {
-
-        const checkTeacher = await dbClient.query(`SELECT
-                                                          * FROM teachers as t
-                                                          JOIN courses as c ON t.id = c.teacher_id
-                                                          WHERE t.user_id = $1 and c.id = $2`,
-                                                            [request.userId, courseId]
-            )
-
-        if (checkTeacher.rows.length === 0) {
-            response.status(403).send({error: 'Teacher not found'});
-            return;
+    try{
+        if(!secret){
+            throw new Error("No secret provided");
         }
 
-        const checkStudent = await dbClient.query(`SELECT
-                                                         * FROM students_courses as sc
-                                                         JOIN students as s ON sc.student_id = s.id
-                                                         WHERE s.id = $1 and sc.course_id = $2`,
-                                                            [studentId, courseId]
-            );
+        const payload = jwt.verify(token, secret) as JwtPayload;
 
-        if (checkStudent.rows.length === 0) {
-            response.status(403).send({error: 'Student not found'});
-            return;
+        const teacherUser = await dbClient.query(`SELECT * FROM teachers where user_id=$1`,[payload.userId]);
+
+        if(teacherUser.rows[0]){
+            req.userId = payload.userId;
+            next();
+        }else{
+            res.status(403).json({ error: "Forbidden" });
         }
-        next();
-    } catch (error) {
-        response.status(500).send({msg: 'internal server error', error:error})
-    }
 
+    }catch(err){
+        res.status(500).json({ error: err });
+        res.clearCookie("token");
+    }
 }
