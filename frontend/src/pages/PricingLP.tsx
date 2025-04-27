@@ -1,4 +1,4 @@
-import { Text } from "../components/Text.tsx";
+import { Text } from "../components/ui/Text.tsx";
 import { NavBar } from "../components/NavBar.tsx";
 import { Link } from "react-router-dom";
 import { Footer } from "../components/Footer.tsx";

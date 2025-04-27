@@ -1,4 +1,4 @@
-import { Text } from "../components/Text";
+import { Text } from "../ui/Text";
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

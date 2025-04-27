@@ -40,11 +40,11 @@ export const Navbar = () => {
                 <div>
                     <Link to={'/'}><img className='w-[270px] cursor-pointer' src='/GradeSyncLogoDarkMedium.png' alt='GradeSync'/></Link>
                     <div className='flex flex-col gap-2 mt-10'>
-                        <NavbarButton url='/'> <Stars/> <Text type='nav'>Dashboard</Text></NavbarButton>
-                        <NavbarButton url='/grades'> <Calendar/> <Text type='nav'>Grades</Text></NavbarButton>
-                        <NavbarButton url='/calendar'> <Book/> <Text type='nav'>Calendar</Text></NavbarButton>
-                        <NavbarButton url='/messages'> <Clock/> <Text type='nav'>Messages</Text></NavbarButton>
-                        <NavbarButton url='/frequency'> <Message/> <Text type='nav'>Frequency</Text></NavbarButton>
+                        <NavbarButton url='/dashboard'> <Stars/> <Text type='nav'>Dashboard</Text></NavbarButton>
+                        <NavbarButton url='/dashboard/grades'> <Calendar/> <Text type='nav'>Grades</Text></NavbarButton>
+                        <NavbarButton url='/dashboard/calendar'> <Book/> <Text type='nav'>Calendar</Text></NavbarButton>
+                        <NavbarButton url='/dashboard/messages'> <Clock/> <Text type='nav'>Messages</Text></NavbarButton>
+                        <NavbarButton url='/dashboard/frequency'> <Message/> <Text type='nav'>Frequency</Text></NavbarButton>
                     </div>
                 </div>
                 <div className='w-full border-t-3 border-lightgray rounded-full'></div>

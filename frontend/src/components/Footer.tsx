@@ -1,4 +1,4 @@
-import {Text} from "./Text.tsx";
+import { Text } from "../components/ui/Text";
 
 export const Footer = () => {
     return (
