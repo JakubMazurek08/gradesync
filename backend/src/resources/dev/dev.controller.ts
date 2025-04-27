@@ -71,6 +71,7 @@ devController.get('/reset', async (req:Request, res:Response) => {
                   value int not null,
                   title varchar not null,
                   category varchar not null,
+                  description varchar,
                   student_id bigint references students (id),
                   course_id bigint references courses (id),
                   created_at timestamp default current_timestamp
@@ -216,7 +217,7 @@ devController.get('/reset', async (req:Request, res:Response) => {
                 (8, 6),
                 (8, 7), (8, 8), (8, 9), (8, 10), (8, 11), (8, 12), (8, 13), (8, 14);
                 
-                INSERT INTO grades (value, title, category, student_id, course_id) VALUES 
+                INSERT INTO grades (value, title, category, student_id, course_id, description) VALUES 
                 (83, 'Trigonometry', 'test', 3, 1),
                 (83, 'Quadratic Equation', 'test', 3, 1),
                 (83, 'Trigonometry', 'short_test', 3, 1),
@@ -226,7 +227,7 @@ devController.get('/reset', async (req:Request, res:Response) => {
                 (90, 'Functions', 'test', 3, 5),
                 (75, 'Renaissance', 'test', 3, 6),
                 (90, 'Trigonometry', 'test', 4, 1),
-                (90, 'Quadratic Equation', 'test', 4, 1),
+                (90, 'Quadratic Equation', 'test', 4, 1, 'Very hard sprawdzian from Piotr Brodzik big sigma'),
                 (70, 'Trigonometry', 'short_test', 4, 1),
                 (95, 'Crud', 'test', 4, 2),
                 (100, 'Algorithms', 'test', 4, 3),
