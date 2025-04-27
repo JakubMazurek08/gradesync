@@ -47,3 +47,32 @@ export const Clock = () => {
         <path d="M17.64 18.67 20 21"/>
     </svg>
 }
+
+export const Settings = () => {
+    return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path
+            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+    </svg>
+}
+
+export const Hamburger = () => {
+    return <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 7L4 7" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M20 12L4 12" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M20 17L4 17" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+}
+
+export const Lesson = () => {
+    return <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path  d="M20,22H5a1,1,0,0,1-1-1V3A1,1,0,0,1,5,2H20a1,1,0,0,1,1,1V18a1,1,0,0,1-2,0V4H6V20H20a1,1,0,0,1,0,2Z"/>
+        <path d="M7,7H3A1,1,0,0,1,3,5H7A1,1,0,0,1,7,7Z"/>
+        <path d="M7,11H3A1,1,0,0,1,3,9H7a1,1,0,0,1,0,2Z"/>
+        <path d="M7,15H3a1,1,0,0,1,0-2H7a1,1,0,0,1,0,2Z"/>
+        <path d="M7,19H3a1,1,0,0,1,0-2H7a1,1,0,0,1,0,2Z"/>
+        <path d="M15,11H11a1,1,0,0,1,0-2h4a1,1,0,0,1,0,2Z"/>
+        <path d="M15,15H11a1,1,0,0,1,0-2h4a1,1,0,0,1,0,2Z"/>
+    </svg>
+}

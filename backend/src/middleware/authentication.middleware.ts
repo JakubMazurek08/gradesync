@@ -6,11 +6,11 @@ const secret = ENV.AUTHENTICATION.SECRET;
 
 declare module "express" {
     interface Request {
-        user?: string | JwtPayload;
+        userId?: string | JwtPayload;
     }
 }
 
-export const userAuthenticationMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const authenticationMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies?.token;
 
     if (!token) {
@@ -22,9 +22,9 @@ export const userAuthenticationMiddleware = (req: Request, res: Response, next: 
             throw new Error("No secret provided");
         }
 
-        const user = jwt.verify(token, secret) as JwtPayload;
+        const payload = jwt.verify(token, secret) as JwtPayload;
 
-        req.user = user.login;
+        req.userId = payload.userId;
 
         next();
     }catch(err){

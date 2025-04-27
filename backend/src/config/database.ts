@@ -1,4 +1,4 @@
-import {Pool} from "pg";
+import {Pool, PoolClient} from "pg";
 import {ENV} from "./env";
 
 export const dbClient = new Pool({
@@ -7,6 +7,8 @@ export const dbClient = new Pool({
     user: ENV.DATABASE.PGUSER,
     password: ENV.DATABASE.PGPASSWORD,
     port: 5432,
+    idleTimeoutMillis: 0,
+    connectionTimeoutMillis: 0,
     ssl: {
         rejectUnauthorized: false,
     },

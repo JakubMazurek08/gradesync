@@ -10,7 +10,7 @@ interface ButtonProps
 
 export const Button = ({children, size, variant, ...props}: ButtonProps) => {
     return (
-        <button className={`${variant == 'important' ? 'bg-blue-500 hover:bg-transparent'  : 'bg-transparent hover:bg-blue-500'} w-fit px-4 py-1 border-blue-500 border-2  rounded-lg cursor-pointer active:scale-95 transition-all duration-200`} {...props}>
+        <button className={`${variant == 'important' ? 'bg-blue-500 hover:bg-transparent border-blue-500'  : 'bg-transparent hover:bg-blue-500 hover:border-blue-500 border-lightgray'} w-fit px-4 py-1 border-2  rounded-lg cursor-pointer active:scale-95 transition-all duration-200`} {...props}>
             {size === 'large' ? (
                 <Text type="h3">{children}</Text>
             ) : size === 'small' ? (
