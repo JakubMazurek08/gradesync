@@ -1,4 +1,4 @@
-import express, {request, Request, Response} from "express";
+import express, { Request, Response } from "express";
 import {dbClient} from "../../config/database";
 import {authenticationMiddleware} from "../../middleware/authentication.middleware";
 import {teacherAuthenticationMiddleware} from "../../middleware/teacherValidation.middleware";
