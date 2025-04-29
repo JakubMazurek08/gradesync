@@ -33,3 +33,4 @@ gradeController.get('/courses', authenticationMiddleware, async (req:Request, re
     }
 
 })
+
