@@ -11,7 +11,7 @@ export const TeacherCourse = ({courseName, yearString}:CourseProps) => {
     const navigate = useNavigate();
 
     return(
-        <button onClick={() => navigate(`/dashboard/grades/${courseName}`)}
+        <button onClick={() => navigate(`/dashboard/grades/${courseName + '$' + yearString}`)}
     className="cursor-pointer flex gap-4 justify-start items-center text-start text-purple-500">
     <Lesson/>
     <div>

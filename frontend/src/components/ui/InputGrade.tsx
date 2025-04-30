@@ -1,12 +1,16 @@
-import {useState} from "react";
-import {getGradientColor} from "../../lib/gradientColors.ts";
+import { useState } from "react";
+import { getGradientColor } from "../../lib/gradientColors.ts";
 
-interface InputGradeProps extends React.InputHTMLAttributes<HTMLInputElement>{
-    defaultValue?: number,
-    inputSize?: 'small' | 'medium' | 'large'
+interface InputGradeProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    defaultValue?: number;
+    inputSize?: "small" | "medium" | "large";
 }
 
-export const InputGrade = ({inputSize = 'medium', defaultValue = 50, ...rest}: InputGradeProps) => {
+export const InputGrade = ({
+                               inputSize = "medium",
+                               defaultValue = 50,
+                               ...rest
+                           }: InputGradeProps) => {
     const [value, setValue] = useState(defaultValue);
 
     const gradientPercentage = `${Math.min(Math.max(value, 0), 100)}%`;
@@ -23,6 +27,12 @@ export const InputGrade = ({inputSize = 'medium', defaultValue = 50, ...rest}: I
         large: "size-[48px]",
     };
 
+    const fontSizeMap = {
+        small: "text-[10px]",
+        medium: "text-[16px]",
+        large: "text-[24px]",
+    };
+
     return (
         <div
             className={`flex items-center justify-center shrink-0 ${sizeMap[inputSize]} rounded-full`}
@@ -30,33 +40,33 @@ export const InputGrade = ({inputSize = 'medium', defaultValue = 50, ...rest}: I
                 background: `conic-gradient(from 0deg, ${getGradientColor(value)} ${gradientPercentage}, #3C3C3C ${gradientPercentage})`,
             }}
         >
-            <div className={`flex items-center justify-center ${innerSizeMap[inputSize]} rounded-full bg-mediumgray`}>
+            <div
+                className={`flex items-center justify-center ${innerSizeMap[inputSize]} rounded-full bg-mediumgray`}
+            >
                 <input
                     {...rest}
-                    type='text'
-                    inputMode='numeric'
+                    type="text"
+                    inputMode="numeric"
                     placeholder={`${value}`}
+                    value={value}
                     onInput={(e) => {
-                        const value = e.currentTarget.value;
-
-                        if (/^\d*$/.test(value)) {
-                            const num = parseInt(value || "0", 10);
+                        const val = e.currentTarget.value;
+                        if (/^\d*$/.test(val)) {
+                            const num = parseInt(val || "0", 10);
                             if (num >= 0 && num <= 100) {
                                 setValue(num);
-                            } else if (value === "") {
+                            } else if (val === "") {
                                 setValue(0);
                             }
                         }
                     }}
-                    className={`${
-                        inputSize === "large"
-                            ? "text-[24px]"
-                            : inputSize === "small"
-                                ? "text-[10px]"
-                                : "text-[16px]"
-                    } text-white font-semibold font-open-sans max-w-full w-5 text-center outline-none`}
+                    className={`${fontSizeMap[inputSize]} text-white font-semibold font-open-sans text-center outline-none`}
+                    style={{
+                        width: `min(${value.toString().length + 1}ch, 4ch)`,
+                        minWidth: "2ch",
+                    }}
                 />
             </div>
         </div>
     );
-}
+};

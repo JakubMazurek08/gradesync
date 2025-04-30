@@ -56,12 +56,11 @@ export const CoursesList = ({setAverage, isTeacher}:{setAverage?: (arg0: number)
                 method: "GET",
                 credentials: "include",
             }).then(res=>{if(res.status===200)res.json().then((data=>{
-                console.log(data);
                 setCourses(data)
             }))})
         }
 
-    }, []);
+    }, [isTeacher]);
 
     const getSimilarityScore = (courseName: string, search: string): number => {
         const name = courseName.toLowerCase();

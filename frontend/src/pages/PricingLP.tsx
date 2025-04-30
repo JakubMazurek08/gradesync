@@ -1,7 +1,7 @@
 import { Text } from "../components/ui/Text.tsx";
-import { NavBar } from "../components/NavBar.tsx";
+import { NavBar } from "../components/landingPage/NavBar.tsx";
 import { Link } from "react-router-dom";
-import { Footer } from "../components/Footer.tsx";
+import { Footer } from "../components/landingPage/Footer.tsx";
 
 export const PricingLP = () => {
     return (

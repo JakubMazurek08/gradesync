@@ -31,13 +31,18 @@ export const GradeDisplayCategory = ({category, grades}: GradeDisplayCategoryPro
         return <>
             <div className="m-4 flex flex-col gap-2">
                 <Text type='h4'>{category ? capitalCase(category) : 'Additional'}:</Text>
-                <div className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_max-content))] gap-2">
+                <div className="flex flex-wrap gap-4">
                     {filteredGrades.map((grade) => (
+
+
                         <div key={grade.gradeId} onClick={() => {
-                            setSelectedGrade(grade)
-                        }} className="flex items-center cursor-pointer gap-2 w-[200px]">
-                            <Grade size='small' value={grade.gradeValue}/>
-                            <Text type='small'>{grade.gradeTitle}</Text>
+                    setSelectedGrade(grade)}}
+                            className="relative group inline-block cursor-pointer">
+                            <Grade size="medium" value={grade.gradeValue}/>
+                            <div
+                                className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-mediumlight-gray text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 whitespace-nowrap">
+                                {grade.gradeTitle}
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -52,19 +57,19 @@ export const GradeDisplayCategory = ({category, grades}: GradeDisplayCategoryPro
 
                         <div className="flex justify-center items-center w-full h-full">
                             <div
-                                className="bg-background p-6 w-full m-2 rounded-xl sm:w-2/3 lg:w-1/3 z-50 flex  drop-shadow-2xl  flex-col gap-4">
-                                <div className={'mb-10'}>
-                                    <Text type="h2"><span className={'text-purple-500'}>{capitalCase(selectedGrade.gradeCategory)}.</span></Text>
+                                className="bg-background p-10 min-w-1/4 w-fit m-2 rounded-xl  z-50 flex  drop-shadow-2xl  flex-col gap-8">
+                                <div>
+                                    <Text>{capitalCase(selectedGrade.gradeCategory)}</Text>
                                     <Text type="h3">{selectedGrade.gradeTitle}</Text>
                                 </div>
 
                                 <div className="flex gap-4 items-center">
                                     <Text type={'h3'}> Grade: </Text>
-                                <Grade size={'large'} value={selectedGrade.gradeValue}/>
+                                    <Grade  value={selectedGrade.gradeValue}/>
                                 </div>
 
                                 <div>
-                                    <Text type={"h4"}>Description</Text>
+                                    <Text type={"h4"}>Description:</Text>
                                     <Text type={'small'}>{selectedGrade.gradeDescription ?? "No description"}</Text>
                                 </div>
 

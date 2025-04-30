@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Footer } from './components/Footer.tsx';
+import { Footer } from './components/landingPage/Footer.tsx';
 import { PricingLP } from './pages/PricingLP.tsx';
 import { LandingPage } from './pages/LandingPage.tsx';
 import { Dashboard } from './pages/Dashboard.tsx';

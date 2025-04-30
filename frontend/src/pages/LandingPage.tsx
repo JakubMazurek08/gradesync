@@ -1,9 +1,9 @@
 import { Text } from "../components/ui/Text.tsx";
-import { NavBar } from "../components/NavBar";
+import { NavBar } from "../components/landingPage/NavBar.tsx";
 import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { FeaturesSection } from "../components/landingPage/FeaturesSection.tsx";
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/landingPage/Footer.tsx";
 
 export const LandingPage = () => {
   const [typewriterText, setTypewriterText] = useState("TRACK");

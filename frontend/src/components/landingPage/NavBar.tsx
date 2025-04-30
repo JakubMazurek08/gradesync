@@ -1,4 +1,4 @@
-import { Text } from "../components/ui/Text";
+import { Text } from "../ui/Text.tsx";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 

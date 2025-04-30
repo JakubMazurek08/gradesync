@@ -48,7 +48,7 @@ export const Navbar = () => {
                     </div>
                 </div>
                 <div className='w-full border-t-3 border-lightgray rounded-full'></div>
-                <NavbarButton url='/settings'> <Settings/> <Text type='nav'>Settings</Text></NavbarButton>
+                <NavbarButton url='/dashboard/settings'> <Settings/> <Text type='nav'>Settings</Text></NavbarButton>
             </aside>
 
 

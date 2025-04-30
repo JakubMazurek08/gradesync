@@ -1,6 +1,7 @@
 import express, {Request, Response} from "express";
 import {dbClient} from "../../config/database";
 import {authenticationMiddleware} from "../../middleware/authentication.middleware";
+import {teacherAuthenticationMiddleware} from "../../middleware/teacherAuthentication.middleware";
 
 
 export const gradeController = express.Router();
@@ -95,6 +96,147 @@ gradeController.get('/:course', authenticationMiddleware, async (req: Request, r
     }
 });
 
+gradeController.get('/:course/students', teacherAuthenticationMiddleware, async (req: Request, res: Response) => {
+    const teacherId = req.userId;
+    const [courseName, yearRange] = req.params.course.split('$');
+    const [startYearStr, endYearStr] = yearRange.split('-');
+
+    const startYear = parseInt(startYearStr, 10);
+    const endYear = parseInt(endYearStr, 10);
 
 
+    if (!teacherId || !courseName || isNaN(startYear) || isNaN(endYear)) {
+        res.status(400).json({ error: "Invalid request parameters" });
+    }
 
+    const query = `
+    SELECT 
+        s.id AS student_id,
+        u.first_name,
+        u.last_name,
+        g.id AS grade_id,
+        g.value,
+        g.title,
+        g.category,
+        g.description,
+        g.created_at
+    FROM courses c
+    JOIN students_courses sc ON sc.course_id = c.id
+    JOIN students s ON s.id = sc.student_id
+    JOIN users u ON u.id = s.user_id
+    LEFT JOIN grades g ON g.student_id = s.id AND g.course_id = c.id
+    WHERE c.course_name = $1 AND c.start_year = $2 AND c.end_year = $3 AND c.teacher_id = $4
+    ORDER BY s.id, g.id;
+`;
+
+    const values = [courseName, startYear, endYear, teacherId];
+
+   try{
+    const { rows } = await dbClient.query(query, values);
+
+        const studentsMap: Record<number, any> = {};
+
+        for (const row of rows) {
+            const {
+                student_id, first_name, last_name,
+                grade_id, value, title, category, description, created_at
+            } = row;
+
+            if (!studentsMap[student_id]) {
+                studentsMap[student_id] = {
+                    studentId: student_id,
+                    name: `${first_name} ${last_name}`,
+                    grades: []
+                };
+            }
+
+            if (grade_id) {
+                studentsMap[student_id].grades.push({
+                    id: grade_id,
+                    value,
+                    title,
+                    category,
+                    description,
+                    created_at
+                });
+            }
+        }
+
+        const result = Object.values(studentsMap);
+        res.send(result);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Server error" });
+    }
+});
+
+//TODO ADD DTO
+gradeController.put('/:gradeId', teacherAuthenticationMiddleware, async (req: Request, res: Response) => {
+    if (!req.userId) {
+        res.status(401).send({ error: "unauthorized" });
+    }
+
+    const { gradeId } = req.params;
+    const { value, title, category, description } = req.body;
+
+    if (!value || !title || !category) {
+        res.status(400).json({ error: 'Missing required fields (value, title, or category)' });
+    }
+
+    try {
+        const query = `
+            UPDATE grades
+            SET value = $1, title = $2, category = $3, description = $4
+            WHERE id = $5
+            RETURNING id, value, title, category, description, created_at;
+        `;
+
+        const values = [value, title, category, description, gradeId];
+        const { rows } = await dbClient.query(query, values);
+
+        if (rows.length === 0) {
+            res.status(404).send({ error: 'Grade not found' });
+        }
+
+        res.status(200).send(rows[0]);
+    } catch (err) {
+        res.status(500).send({ error: err });
+    }
+});
+
+
+gradeController.delete('/:id', teacherAuthenticationMiddleware, async (req: Request, res: Response) => {
+    const teacherId = req.userId;
+    const gradeId = parseInt(req.params.id, 10);
+
+    if (isNaN(gradeId)) {
+        res.status(400).send({ error: 'Invalid grade ID' });
+    }
+
+    try {
+
+        const gradeCheckQuery = `
+            SELECT g.id 
+            FROM grades g
+            JOIN courses c ON g.course_id = c.id
+            WHERE g.id = $1 AND c.teacher_id = $2
+        `;
+        const gradeCheckValues = [gradeId, teacherId];
+        const { rows } = await dbClient.query(gradeCheckQuery, gradeCheckValues);
+
+        if (rows.length === 0) {
+            res.status(404).send({ error: 'Grade not found or you do not have permission to delete it' });
+        }
+
+        const deleteGradeQuery = `
+            DELETE FROM grades 
+            WHERE id = $1
+        `;
+        await dbClient.query(deleteGradeQuery, [gradeId]);
+
+        res.status(200).send({ message: 'Grade deleted successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ error: 'Server error' });
+    }
+});
