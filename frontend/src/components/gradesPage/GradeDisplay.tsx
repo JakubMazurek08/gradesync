@@ -10,6 +10,7 @@ type Grade = {
     gradeValue: number;
     gradeTitle: string;
     gradeCategory: string;
+    gradeDescription?: string;
 }
 
 type Data = {

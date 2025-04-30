@@ -13,7 +13,7 @@ export const TeacherGradesPage = () => {
         <div className={`w-full ${course?'hidden sm:flex' : 'flex'} flex-col sm:flex-row justify-between`}>
             <Text type='h1'>Grades</Text>
         </div>
-        <Button onClick={()=>{navigate('/grades')}}
+        <Button onClick={()=>{navigate('/dashboard/grades')}}
                 className={`${course? 'block sm:hidden bg-transparent hover:bg-blue-500 hover:border-blue-500 border-lightgray  w-fit px-4 py-1 border-2  rounded-lg cursor-pointer active:scale-95 transition-all duration-200' : 'hidden' }`}>Back</Button>
         <div className='flex flex-row my-6'>
             <CoursesList isTeacher={true}/>

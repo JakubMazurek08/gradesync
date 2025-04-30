@@ -71,7 +71,8 @@ gradeController.get('/:course', authenticationMiddleware, async (req: Request, r
                  g.id AS "gradeId",
                  g.value AS "gradeValue",
                  g.title AS "gradeTitle",
-                 g.category AS "gradeCategory"
+                 g.category AS "gradeCategory",
+                 g.description AS "gradeDescription"
              FROM grades g
                       JOIN courses c ON g.course_id = c.id
                       JOIN teachers t ON c.teacher_id = t.id

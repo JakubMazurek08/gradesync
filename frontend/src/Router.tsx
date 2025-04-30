@@ -34,6 +34,10 @@ const router = createBrowserRouter([
                 element: <GradesPage />,
             },
             {
+                path: 'grades/:course',
+                element: <GradesPage />,
+            },
+            {
                 path: 'settings',
                 element: <Settings />,
             },

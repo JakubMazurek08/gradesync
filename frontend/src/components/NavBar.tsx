@@ -83,7 +83,7 @@ export const NavBar = () => {
           visible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <Link to="/landingpage" className="transition-transform duration-200 hover:scale-105">
+        <Link to="/" className="transition-transform duration-200 hover:scale-105">
           <img src="/GradeSyncLogoDarkSmall.png" alt="LOGO" className="h-10" />
         </Link>
         <div className="w-150 flex flex-row justify-around items-center">
@@ -94,10 +94,10 @@ export const NavBar = () => {
             <Text type="h4">PRICING</Text>
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-lightgray transition-all duration-300 group-hover:w-full"></span>
           </Link>
-          <div className="px-5 py-2 mx-3 cursor-pointer relative group overflow-hidden">
-            <Text type="h4">LOGIN/SIGN UP</Text>
+          <Link to="/dashboard" className="px-5 py-2 mx-3 cursor-pointer relative group overflow-hidden">
+            <Text type="h4">DASHBOARD</Text>
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-lightgray transition-all duration-300 group-hover:w-full"></span>
-          </div>
+          </Link>
         </div>
       </div>
 

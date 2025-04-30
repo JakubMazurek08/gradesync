@@ -14,7 +14,7 @@ export const Course = ({course}:{course:Course}) => {
     const navigate = useNavigate();
 
     return(
-        <button onClick={() => navigate(`/grades/${course.courseName}`)}
+        <button onClick={() => navigate(`/dashboard/grades/${course.courseName}`)}
                 className="cursor-pointer flex gap-4 justify-start text-start">
             <Grade size='large' value={Math.round(course.averageGrade)}/>
             <div>
