@@ -21,6 +21,8 @@ loginController.post("/", async (req: Request, res: Response) => {
         const userPassword = result.rows[0]?.password;
         const userId = result.rows[0]?.id;
 
+        const teacherResult = await dbClient.query(`SELECT * FROM teachers where user_id=$1`,[userId]);
+
         if(!userPassword){
             res.status(404).send();
             return;
@@ -34,7 +36,7 @@ loginController.post("/", async (req: Request, res: Response) => {
             if(result){
                 const token = jwt.sign({userId}, secret , { expiresIn: "1h" });
                 res.cookie("token", token);
-                res.status(200).send({id: userId});
+                res.status(200).send({id: userId, isTeacher: teacherResult.rows[0] != null});
             }else{
                 res.status(401).send();
             }

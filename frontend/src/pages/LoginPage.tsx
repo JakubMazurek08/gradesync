@@ -15,7 +15,7 @@ type FormFields = {
 };
 
 export const LoginPage = () => {
-    const {setUserId} = useUserStore();
+    const {setUserId, setIsTeacher} = useUserStore();
     const [isRegistering, setIsRegistering] = useState(false);
 
     const {
@@ -39,7 +39,7 @@ export const LoginPage = () => {
                 }),
             }).then((res) => {
                 if(res.status === 200) {
-                    res.json().then((data) => setUserId(data.id))
+                    res.json().then((data) => {setUserId(data.id); setIsTeacher(data.isTeacher)})
                     toastify({
                             text: "Logged In!",
                             duration: 3000,
@@ -80,7 +80,7 @@ export const LoginPage = () => {
                 }),
             }).then((res) => {
                 if(res.status === 200) {
-                    res.json().then((data) => setUserId(data.id))
+                    res.json().then((data) => {setUserId(data.id); setIsTeacher(data.isTeacher)})
                     toastify({
                             text: "Created Account!",
                             duration: 3000,

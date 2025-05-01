@@ -13,5 +13,5 @@ export const useUserStore = create<UserStore>((set) => ({
     isTeacher: false,
     setUserId: (id) => set({ userId: id }),
     setIsTeacher: (isTeacher: boolean) => set({ isTeacher: isTeacher }),
-    logout: () => set({ userId: undefined }),
+    logout: () => set({ userId: undefined, isTeacher: false }),
 }));

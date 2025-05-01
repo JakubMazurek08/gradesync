@@ -16,7 +16,7 @@ export const StudentGradesPage = () => {
             <div className={`w-full ${course?'hidden sm:flex' : 'flex'} flex-col sm:flex-row justify-between`}>
                 <Text type='h1'>Grades</Text>
                 <div className='flex items-center gap-6'>
-                    <Text type='h3'>Average:</Text>
+                    <Text type='h3'>All Grades Average:</Text>
                     <Grade size='large' value={average}/>
                 </div>
             </div>

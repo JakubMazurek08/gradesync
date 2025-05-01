@@ -34,12 +34,12 @@ html{
     --fc-border-color: #222222;
 
     --fc-button-text-color: #fff;
-    --fc-button-bg-color: #402c50;
-    --fc-button-border-color: #3f2c50;
-    --fc-button-hover-bg-color: #2e1e37;
-    --fc-button-hover-border-color: #271a2f;
-    --fc-button-active-bg-color: #261a2f;
-    --fc-button-active-border-color: #1d1527;
+    --fc-button-bg-color: #3c1595;
+    --fc-button-border-color: #471ca6;
+    --fc-button-hover-bg-color: #37138a;
+    --fc-button-hover-border-color: #260f5a;
+    --fc-button-active-bg-color: #1f0c4c;
+    --fc-button-active-border-color: #0b0520;
 
     --fc-event-bg-color: #903FED;
     --fc-event-border-color: #903FED;
@@ -99,4 +99,12 @@ html{
 
 .fc-timegrid-event-harness-inset .fc-timegrid-event, .fc-timegrid-event.fc-event-mirror, .fc-timegrid-more-link{
     box-shadow: none;
+}
+
+.fc-event-title{
+    color: #D0D0D0;
+}
+
+.fc-event-time{
+    color: #D0D0D0;
 }
