@@ -5,5 +5,6 @@ import { TeacherGradesPage } from "./TeacherGradesPage.tsx";
 export const GradesPage = () => {
     const {isTeacher} = useUserStore();
 
+
     return(isTeacher ? <TeacherGradesPage/> : <StudentGradesPage/>);
 }

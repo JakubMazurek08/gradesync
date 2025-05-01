@@ -102,7 +102,17 @@ INSERT INTO users (first_name, last_name, email, login, password) VALUES
                                                                       ('Daniel', 'Nowak', 'danielnowak@gmail.com', 'Daniel', '$2b$10$jlMerNtOtWcVh6Hs.CEUceHjNy41OxWQTpP91SEDrHpR7YAiTvuRK'),
                                                                       ('Agata', 'Kowalska', 'agatakowalska@gmail.com', 'Agata', '$2b$10$jlMerNtOtWcVh6Hs.CEUceHjNy41OxWQTpP91SEDrHpR7YAiTvuRK'),
                                                                       ('Krzysztof', 'Wrona', 'krzysztofwrona@gmail.com', 'Krzysztof', '$2b$10$jlMerNtOtWcVh6Hs.CEUceHjNy41OxWQTpP91SEDrHpR7YAiTvuRK'),
-                                                                      ('Ewa', 'Zając', 'ewazajac@gmail.com', 'Ewa', '$2b$10$jlMerNtOtWcVh6Hs.CEUceHjNy41OxWQTpP91SEDrHpR7YAiTvuRK');
+                                                                      ('Ewa', 'Zając', 'ewazajac@gmail.com', 'Ewa', '$2b$10$jlMerNtOtWcVh6Hs.CEUceHjNy41OxWQTpP91SEDrHpR7YAiTvuRK'),
+                                                                      ('Laura', 'Kowalczyk', 'laurakowalczyk@gmail.com', 'Laura', '$2b$10$jlMerNtOtWcVh6Hs.CEUceHjNy41OxWQTpP91SEDrHpR7YAiTvuRK'),
+                                                                      ('Mateusz', 'Duda', 'mateuszduda@gmail.com', 'Mateusz', '$2b$10$jlMerNtOtWcVh6Hs.CEUceHjNy41OxWQTpP91SEDrHpR7YAiTvuRK'),
+                                                                      ('Zofia', 'Kaczmarek', 'zofiakaczmarek@gmail.com', 'Zofia', '$2b$10$jlMerNtOtWcVh6Hs.CEUceHjNy41OxWQTpP91SEDrHpR7YAiTvuRK'),
+                                                                      ('Lena', 'Sikora', 'lenasikora@gmail.com', 'Lena', '$2b$10$jlMerNtOtWcVh6Hs.CEUceHjNy41OxWQTpP91SEDrHpR7YAiTvuRK'),
+                                                                      ('Pawel', 'Wójcik', 'pawelwojcik@gmail.com', 'Pawel', '$2b$10$jlMerNtOtWcVh6Hs.CEUceHjNy41OxWQTpP91SEDrHpR7YAiTvuRK'),
+                                                                      ('Karolina', 'Michalak', 'karolinamichalak@gmail.com', 'Karolina', '$2b$10$jlMerNtOtWcVh6Hs.CEUceHjNy41OxWQTpP91SEDrHpR7YAiTvuRK'),
+                                                                      ('Tomasz', 'Baran', 'tomaszbaran@gmail.com', 'TomaszB', '$2b$10$jlMerNtOtWcVh6Hs.CEUceHjNy41OxWQTpP91SEDrHpR7YAiTvuRK'),
+                                                                      ('Maja', 'Gorska', 'majagorska@gmail.com', 'Maja', '$2b$10$jlMerNtOtWcVh6Hs.CEUceHjNy41OxWQTpP91SEDrHpR7YAiTvuRK'),
+                                                                      ('Jakub', 'Witkowski', 'jakubwitkowski@gmail.com', 'JakubW', '$2b$10$jlMerNtOtWcVh6Hs.CEUceHjNy41OxWQTpP91SEDrHpR7YAiTvuRK'),
+                                                                      ('Emilia', 'Nowicka', 'emilianowicka@gmail.com', 'Emilia', '$2b$10$jlMerNtOtWcVh6Hs.CEUceHjNy41OxWQTpP91SEDrHpR7YAiTvuRK');
 
 
 
@@ -130,7 +140,17 @@ INSERT INTO students (user_id) VALUES
                                    (11),
                                    (12),
                                    (13),
-                                   (14);
+                                   (14),
+                                   (23),
+                                   (24),
+                                   (25),
+                                   (26),
+                                   (27),
+                                   (28),
+                                   (29),
+                                   (30),
+                                   (31),
+                                   (32);
 
 INSERT INTO courses (course_name, teacher_id, schools_id) VALUES
                                                               ('Mathematics', 1, 1),
@@ -198,7 +218,24 @@ INSERT INTO students_courses (student_id, course_id) VALUES
                                                          (6, 6),
                                                          (7, 6),
                                                          (8, 6),
-                                                         (8, 7), (8, 8), (8, 9), (8, 10), (8, 11), (8, 12), (8, 13), (8, 14);
+                                                         (8, 7),
+                                                         (8, 8),
+                                                         (8, 9),
+                                                         (8, 10),
+                                                         (8, 11),
+                                                         (8, 12),
+                                                         (8, 13),
+                                                         (8, 14),
+                                                         (9, 1),
+                                                         (10, 1),
+                                                         (11, 1),
+                                                         (12, 1),
+                                                         (13, 1),
+                                                         (14, 1),
+                                                         (15, 1),
+                                                         (16, 1),
+                                                         (17, 1),
+                                                         (18, 1);
 
 INSERT INTO grades (value, title, category, student_id, course_id, description) VALUES
                                                                                     (83, 'Trigonometry', 'test', 3, 1, NULL),

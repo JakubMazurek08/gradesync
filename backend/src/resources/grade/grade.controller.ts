@@ -211,6 +211,7 @@ gradeController.delete('/:id', teacherAuthenticationMiddleware, async (req: Requ
 
     if (isNaN(gradeId)) {
         res.status(400).send({ error: 'Invalid grade ID' });
+        return;
     }
 
     try {
@@ -226,6 +227,7 @@ gradeController.delete('/:id', teacherAuthenticationMiddleware, async (req: Requ
 
         if (rows.length === 0) {
             res.status(404).send({ error: 'Grade not found or you do not have permission to delete it' });
+            return;
         }
 
         const deleteGradeQuery = `
@@ -240,3 +242,57 @@ gradeController.delete('/:id', teacherAuthenticationMiddleware, async (req: Requ
         res.status(500).send({ error: 'Server error' });
     }
 });
+
+
+gradeController.post('/', teacherAuthenticationMiddleware, async (req: Request, res: Response) => {
+    const teacherId = req.userId;
+    const { studentId, course, value, title, category, description } = req.body;
+
+    if (!teacherId || !studentId || !course || value == null || !title || !category) {
+        res.status(400).json({ error: "Missing required fields" });
+        return
+    }
+
+    const [courseName, yearRange] = course.split('$');
+    const [startYearStr, endYearStr] = yearRange?.split('-') ?? [];
+
+    const startYear = parseInt(startYearStr, 10);
+    const endYear = parseInt(endYearStr, 10);
+
+    if (!courseName || isNaN(startYear) || isNaN(endYear)) {
+        res.status(400).json({ error: "Invalid course format" });
+        return
+    }
+
+    try {
+        const courseQuery = `
+            SELECT id FROM courses
+            WHERE course_name = $1 AND start_year = $2 AND end_year = $3 AND teacher_id = $4
+            LIMIT 1;
+        `;
+        const courseResult = await dbClient.query(courseQuery, [courseName, startYear, endYear, teacherId]);
+
+        if (courseResult.rowCount === 0) {
+            res.status(404).json({ error: "Course not found" });
+            return
+        }
+
+        const courseId = courseResult.rows[0].id;
+
+        const insertQuery = `
+            INSERT INTO grades (student_id, course_id, value, title, category, description, created_at)
+            VALUES ($1, $2, $3, $4, $5, $6, NOW())
+            RETURNING *;
+        `;
+        const values = [studentId, courseId, value, title, category, description || null];
+
+        const insertResult = await dbClient.query(insertQuery, values);
+        res.status(201).json(insertResult.rows[0]);
+        return
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Server error" });
+        return
+    }
+});
+

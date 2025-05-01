@@ -41,7 +41,7 @@ export const TeacherGradeDisplay = () => {
             !course ? <Text type='h3'> Select a course to begin grading... </Text> :
                 <>
                     <Text type={'h3'}>Students:</Text>
-                    <div className={'p-2 bg-darkgray rounded-xl mt-4'}>
+                    <div className={'p-2 bg-darkgray rounded-xl mt-4 overflow-y-scroll'}>
                         {
                             data?
                             data.map((studentData)=>(

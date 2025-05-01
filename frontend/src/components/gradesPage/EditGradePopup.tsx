@@ -3,6 +3,8 @@ import {capitalCase} from "change-case";
 import {InputGrade} from "../ui/InputGrade.tsx";
 import {useState} from "react";
 import {Button} from "../ui/Button.tsx";
+import toastify from 'toastify-js'
+import "toastify-js/src/toastify.css"
 
 type Grade = {
     id: number;
@@ -19,14 +21,18 @@ type EditGradePopupProps = {
 }
 
 export const EditGradePopup = ({selectedGrade, setSelectedGrade, setStudentGrades} : EditGradePopupProps) => {
-    const [newValue, setNewValue] = useState<string|null>(null);
+    const [newValue, setNewValue] = useState<string>("");
     const [newDescription, setNewDescription] = useState<string|null>(null);
+    const [isSure, setIsSure] = useState(false);
+
 
     const updateGrade = async () => {
         const URL = import.meta.env.VITE_URL + "grade/" + selectedGrade.id;
 
+        const safeValue = Math.max(0, Math.min(parseInt(newValue), 100));
+
         const gradeData = {
-            value: newValue !== null ? parseInt(newValue) : selectedGrade.value,
+            value: safeValue !== null ? safeValue : selectedGrade.value,
             title: selectedGrade.title,
             category: selectedGrade.category,
             description: newDescription !== null ? newDescription : selectedGrade.description
@@ -43,7 +49,13 @@ export const EditGradePopup = ({selectedGrade, setSelectedGrade, setStudentGrade
             });
 
             if (response.ok) {
-                alert('Grade updated');
+                toastify({
+                        text: "Grade Updated!",
+                        duration: 3000,
+                        backgroundColor: '#903FEDFF',
+                    }
+                ).showToast();
+
                 setStudentGrades((prevState: Grade[]) =>
                     prevState.map((grade) =>
                         grade.id === selectedGrade.id
@@ -53,15 +65,26 @@ export const EditGradePopup = ({selectedGrade, setSelectedGrade, setStudentGrade
                 );
             } else {
                 const errorData = await response.json();
-                alert(`Error: ${errorData.error}`);
+                toastify({
+                        text: `Error: ${errorData.error}`,
+                        duration: 3000,
+                        backgroundColor: '#ff0000',
+                    }
+                ).showToast();
             }
         } catch (err) {
-            alert('Something went wrong');
+            toastify({
+                    text: `Error: ${err}`,
+                    duration: 3000,
+                    backgroundColor: '#ff0000',
+                }
+            ).showToast();
         }
     };
 
     const deleteGrade = async () => {
         const URL = import.meta.env.VITE_URL + "grade/" + selectedGrade.id;
+
         try {
             const response = await fetch(URL, {
                 method: 'DELETE',
@@ -72,16 +95,31 @@ export const EditGradePopup = ({selectedGrade, setSelectedGrade, setStudentGrade
             });
 
             if (response.ok) {
-                alert('Grade updated');
+                toastify({
+                        text: "Grade Removed!",
+                        duration: 3000,
+                        backgroundColor: '#903FEDFF',
+                    }
+                ).showToast();
                 setStudentGrades((prevState: Grade[]) =>
                     prevState.filter((grade) => grade.id !== selectedGrade.id)
                 );
             } else {
                 const errorData = await response.json();
-                alert(`Error: ${errorData.error}`);
+                toastify({
+                        text: `Error: ${errorData.error}`,
+                        duration: 3000,
+                        backgroundColor: '#ff0000',
+                    }
+                ).showToast();
             }
         } catch (err) {
-            alert('Something went wrong');
+            toastify({
+                    text: `Error: ${err}`,
+                    duration: 3000,
+                    backgroundColor: '#ff0000',
+                }
+            ).showToast();
         }
     }
 
@@ -90,7 +128,7 @@ export const EditGradePopup = ({selectedGrade, setSelectedGrade, setStudentGrade
         <>
             <div className="absolute w-screen h-screen left-0 top-0 z-40">
                 <div
-                    onClick={() => setSelectedGrade(null)}
+                    onClick={() => {setSelectedGrade(null); setIsSure(false);}}
                     className="absolute w-full h-full bg-black opacity-50"
                 ></div>
 
@@ -117,7 +155,13 @@ export const EditGradePopup = ({selectedGrade, setSelectedGrade, setStudentGrade
                             />
                         </div>
 
-                        <Button onClick={()=>{deleteGrade();setSelectedGrade(null)}} size={'small'}>Remove</Button>
+                        <Button onClick={()=>{
+                            if(isSure){
+                                deleteGrade();setSelectedGrade(null)
+                            }else {
+                                setIsSure(true);
+                            }
+                        }} color={'warning'} size={'small'}>{isSure? 'Are You Sure?' : 'Remove'}</Button>
 
                         <Button variant={'important'} onClick={() => {
                             updateGrade();
