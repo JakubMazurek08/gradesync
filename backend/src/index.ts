@@ -7,9 +7,9 @@ import {loginController} from "./resources/authentication/login.controller";
 import {userController} from "./resources/user/user.controller";
 import {gradeController} from "./resources/grade/grade.controller";
 import {loggerMiddleware} from "./middleware/logger.middleware";
-import {schoolController} from "./resources/school/school.controller";
 import {teacherController} from "./resources/teacher/teacher.controller";
 import {devController} from "./resources/dev/dev.controller";
+import {assignmentController} from "./resources/assignment/assignment.controller";
 
 const port = 3000;
 
@@ -28,7 +28,7 @@ app.use(loggerMiddleware);
 app.use('/login', loginController);
 app.use('/user', userController);
 app.use('/grade', gradeController);
-app.use('/school', schoolController);
+app.use('/assignment', assignmentController);
 app.use('/teacher', teacherController);
 app.use('/dev', devController);
 

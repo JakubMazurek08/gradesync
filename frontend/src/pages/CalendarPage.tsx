@@ -27,12 +27,12 @@ export const CalendarPage = () => {
 
     const {isTeacher} = useUserStore();
 
-    const handlePlusClick = (date) => {
+    const handlePlusClick = (date:any) => {
         alert('Add event for ' + date);
     };
 
     useEffect(() => {
-        const URL = import.meta.env.VITE_URL + "school/timetable/1";
+        const URL = import.meta.env.VITE_URL + "assignment";
 
         fetch(URL, {
             method: 'GET',
