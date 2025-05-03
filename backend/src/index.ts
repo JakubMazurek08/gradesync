@@ -10,6 +10,7 @@ import {loggerMiddleware} from "./middleware/logger.middleware";
 import {teacherController} from "./resources/teacher/teacher.controller";
 import {devController} from "./resources/dev/dev.controller";
 import {assignmentController} from "./resources/assignment/assignment.controller";
+import {courseController} from "./resources/course/course.controller";
 
 const port = 3000;
 
@@ -31,6 +32,7 @@ app.use('/grade', gradeController);
 app.use('/assignment', assignmentController);
 app.use('/teacher', teacherController);
 app.use('/dev', devController);
+app.use('/course', courseController)
 
 connectDB().then(() => {
     app.listen(port, () => {

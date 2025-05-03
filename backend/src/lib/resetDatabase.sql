@@ -170,6 +170,9 @@ INSERT INTO courses (course_name, teacher_id, schools_id) VALUES
                                                               ('Art', 13, 1),
                                                               ('Computer Science', 14, 1);
 
+INSERT INTO courses (course_name, teacher_id, schools_id, start_year, end_year) VALUES
+                                                              ('Mathematics', 1, 1, 2026, 2031);
+
 
 INSERT INTO students_courses (student_id, course_id) VALUES
                                                          (1, 1),

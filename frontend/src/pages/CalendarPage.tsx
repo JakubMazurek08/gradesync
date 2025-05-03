@@ -5,6 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { useEffect, useState } from "react";
 import { Button } from "../components/ui/Button.tsx";
 import {useUserStore} from "../stores/userStore.ts";
+import {AddAssignmentPopup} from "../components/calendarPage/AddAssignmentPopup.tsx";
 
 type Course = {
     startTime: string,
@@ -24,11 +25,17 @@ type Assignment = {
 export const CalendarPage = () => {
     const [allEvents, setAllEvents] = useState<any[]>([]);
     const [viewMode, setViewMode] = useState<'week' | 'month'>('week');
+    const [addAssignmentDate, setAddAssignmentDate] = useState<string|null>(null)
 
     const {isTeacher} = useUserStore();
 
-    const handlePlusClick = (date:any) => {
-        alert('Add event for ' + date);
+    const handlePlusClick = (date:Date) => {
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        const formattedDate = `${day}-${month}-${year}`;
+
+        setAddAssignmentDate(formattedDate);
     };
 
     useEffect(() => {
@@ -67,6 +74,7 @@ export const CalendarPage = () => {
         : allEvents.filter(event => event.type === 'assignment');
 
     return (
+        <>
         <main className="p-5 lg:p-0 lg:px-[5vw] lg:pt-10">
             <Text type={'h3'}>
                 Calendar
@@ -110,5 +118,9 @@ export const CalendarPage = () => {
                 }}
             />
         </main>
+            {addAssignmentDate ?
+                <AddAssignmentPopup addAssignmentDate={addAssignmentDate} setAddAssignmentDate={setAddAssignmentDate}/>
+                : null}
+        </>
     );
 };

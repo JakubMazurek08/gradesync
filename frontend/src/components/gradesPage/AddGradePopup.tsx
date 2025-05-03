@@ -124,7 +124,7 @@ export const AddGradePopup = ({selectedStudent, setSelectedStudent, studentId, s
                                             }
                                         })}
                                     placeholder="type here..."
-                                    inputSize="large"
+                                    inputSize="medium"
                                 />
                                 {errors?.title && <Text>{errors.title.message}</Text>}
                             </div>
@@ -137,7 +137,7 @@ export const AddGradePopup = ({selectedStudent, setSelectedStudent, studentId, s
                                             required: "Category is required",
                                         })}
                                     placeholder="eg. test"
-                                    inputSize="large"
+                                    inputSize="medium"
                                 />
                                 {errors?.category && <Text>{errors.category.message}</Text>}
                             </div>
@@ -151,7 +151,7 @@ export const AddGradePopup = ({selectedStudent, setSelectedStudent, studentId, s
                             <div className="w-full">
                                 <Text type="h4">Description</Text>
                                 <textarea
-                                    className={`mt-4 mb-8 sm:mb-16 bg-darkGray text-lightGray w-full h-40 rounded-[10px] p-4 focus:outline-none max-h-80 min-h-40 text-[20px] sm:text-[20px] text-lightgray font-open-sans`}
+                                    className={`mt-4 mb-8 sm:mb-16 bg-mediumgray text-lightGray w-full h-40 rounded-[10px] p-4 focus:outline-none max-h-80 min-h-40 text-[20px] sm:text-[20px] text-lightgray font-open-sans`}
                                     placeholder={'Type here...'}
                                     {...register('description')}
                                 />

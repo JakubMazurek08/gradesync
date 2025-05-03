@@ -141,36 +141,14 @@ assignmentController.get("/", authenticationMiddleware, async (req: Request, res
 });
 
 assignmentController.post("/", authenticationMiddleware, async (req: Request, res: Response) => {
-    const {title, lessonHour, date, courseString, category, description} = req.body;
+    const {title, lessonHour, date, course, category, description} = req.body;
 
     try {
-        const match = courseString.match(/^(.+)\$(\d{4})-(\d{4})$/);
-        if (!match) {
-            res.status(400).json({error: "Invalid course string format"});
-            return
-        }
-
-        const courseName = match[1];
-        const startYear = parseInt(match[2]);
-        const endYear = parseInt(match[3]);
-
-        const courseRes = await dbClient.query(
-            `SELECT id FROM courses WHERE course_name = $1 AND start_year = $2 AND end_year = $3`,
-            [courseName, startYear, endYear]
-        );
-
-        if (courseRes.rowCount === 0) {
-            res.status(404).json({error: "Course not found"});
-            return
-        }
-
-        const courseId = courseRes.rows[0].id;
-
         const insertRes = await dbClient.query(
             `INSERT INTO assignments (title, lesson_hour, date, course_id, category, description)
              VALUES ($1, $2, $3, $4, $5, $6)
              RETURNING *`,
-            [title, lessonHour, date, courseId, category, description]
+            [title, lessonHour, date, course, category, description]
         );
 
         res.status(201).json(insertRes.rows[0]);
