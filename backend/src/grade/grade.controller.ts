@@ -5,7 +5,7 @@ import {authenticationMiddleware} from "../middleware/authentication.middleware"
 
 export const gradeController = express.Router();
 
-gradeController.get('/courses', authenticationMiddleware, async (req:Request, res:Response) => {
+gradeController.get('/courses/:id', authenticationMiddleware, async (req:Request, res:Response) => {
     console.log('abc');
     if(!req.userId){
         res.status(401).send({error: "unauthorized"});

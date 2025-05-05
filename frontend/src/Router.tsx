@@ -3,6 +3,8 @@ import {Dashboard} from "./pages/Dashboard.tsx"
 import {Navbar} from "./pages/Navbar.tsx";
 import {GradesPage} from "./pages/GradesPage.tsx";
 import {Settings} from "./pages/Settings.tsx";
+import {WheelPage} from "./pages/WheelOfNames/WheelPage.tsx";
+import {WheelGame} from "./pages/WheelOfNames/WheelGame.tsx";
 
 const router = createBrowserRouter([
     {
@@ -22,7 +24,13 @@ const router = createBrowserRouter([
                 element: <Settings/>
             }
         ]
-    },
+    },{
+        path: '/wheel',
+        element: <WheelPage/>
+    },{
+        path: '/wheel2',
+        element: <WheelGame/>
+    }
 ])
 
 export const Router = () => {

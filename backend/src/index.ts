@@ -6,6 +6,8 @@ import cookieParser from 'cookie-parser';
 import {loginController} from "./authentication/login.controller";
 import {userController} from "./user/user.controller";
 import {gradeController} from "./grade/grade.controller";
+import { assignmentsController } from './assignments/assignments.controller';
+import { wheelControler } from './wheelOfFortune/wheel.controler';
 
 const port = 3000;
 
@@ -23,6 +25,8 @@ app.use(cookieParser());
 app.use('/login', loginController);
 app.use('/user', userController);
 app.use('/grade', gradeController);
+app.use('/assigments', assignmentsController)
+app.use('/wheel', wheelControler)
 
 connectDB().then(() => {
     app.listen(port, () => {
