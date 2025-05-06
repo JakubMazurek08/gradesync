@@ -2,6 +2,8 @@ import express, {Request, Response} from "express";
 import {dbClient} from "../../config/database";
 import {authenticationMiddleware} from "../../middleware/authentication.middleware";
 import {teacherAuthenticationMiddleware} from "../../middleware/teacherAuthentication.middleware";
+import {validationMiddleware} from "../../middleware/validation.middleware";
+import {GradeDto} from "./dto/grade.dto";
 
 
 export const gradeController = express.Router();
@@ -170,18 +172,14 @@ gradeController.get('/:course/students', teacherAuthenticationMiddleware, async 
     }
 });
 
-//TODO ADD DTO
-gradeController.put('/:gradeId', teacherAuthenticationMiddleware, async (req: Request, res: Response) => {
+
+gradeController.put('/:gradeId', teacherAuthenticationMiddleware, validationMiddleware(GradeDto), async (req: Request, res: Response) => {
     if (!req.userId) {
         res.status(401).send({ error: "unauthorized" });
     }
 
     const { gradeId } = req.params;
     const { value, title, category, description } = req.body;
-
-    if (!value || !title || !category) {
-        res.status(400).json({ error: 'Missing required fields (value, title, or category)' });
-    }
 
     try {
         const query = `
@@ -244,11 +242,11 @@ gradeController.delete('/:id', teacherAuthenticationMiddleware, async (req: Requ
 });
 
 
-gradeController.post('/', teacherAuthenticationMiddleware, async (req: Request, res: Response) => {
+gradeController.post('/', teacherAuthenticationMiddleware, validationMiddleware(GradeDto), async (req: Request, res: Response) => {
     const teacherId = req.userId;
     const { studentId, course, value, title, category, description } = req.body;
 
-    if (!teacherId || !studentId || !course || value == null || !title || !category) {
+    if (!teacherId || !studentId || !title) {
         res.status(400).json({ error: "Missing required fields" });
         return
     }

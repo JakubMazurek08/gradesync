@@ -3,6 +3,8 @@ import {dbClient} from "../../config/database";
 import {authenticationMiddleware} from "../../middleware/authentication.middleware";
 import {isTeacher} from "../../lib/isTeacher";
 import {QueryResult} from "pg";
+import {validationMiddleware} from "../../middleware/validation.middleware";
+import {AssignmentDto} from "./dto/assignment.dto";
 
 export const assignmentController = express.Router();
 
@@ -140,7 +142,7 @@ assignmentController.get("/", authenticationMiddleware, async (req: Request, res
     }
 });
 
-assignmentController.post("/", authenticationMiddleware, async (req: Request, res: Response) => {
+assignmentController.post("/", authenticationMiddleware, validationMiddleware(AssignmentDto), async (req: Request, res: Response) => {
     const {title, lessonHour, date, course, category, description} = req.body;
 
     try {
@@ -158,7 +160,7 @@ assignmentController.post("/", authenticationMiddleware, async (req: Request, re
     }
 });
 
-assignmentController.put("/:id", authenticationMiddleware, async (req: Request, res: Response) => {
+assignmentController.put("/:id", authenticationMiddleware, validationMiddleware(AssignmentDto), async (req: Request, res: Response) => {
     const {id} = req.params;
     const {title, lessonHour, date, courseString, category, description} = req.body;
 
