@@ -46,8 +46,8 @@ wheelControler.post('/:student_id/:course_id', async(req: Request, res:Response)
             return
         }
 
-        const exists = await dbClient.query('SELECT student_id FROM students_courses WHERE student_id = $1', [student])
-        const exists2 = await dbClient.query('SELECT course_id FROM students_courses WHERE course_id = $1', [courses])
+        const exists = await dbClient.query(`SELECT student_id FROM students_courses WHERE student_id = $1`, [student])
+        const exists2 = await dbClient.query(`SELECT course_id FROM students_courses WHERE course_id = $1`, [courses])
 
         if(exists.rows.length === 0){
             res.status(404).send('Student_Id Not Found')
@@ -58,12 +58,12 @@ wheelControler.post('/:student_id/:course_id', async(req: Request, res:Response)
             return
         }
 
-        const check = await dbClient.query('SELECT student_id, course_id FROM students_courses WHERE student_id = $1 AND course_id = $2', [student, courses])
+        const check = await dbClient.query(`SELECT student_id, course_id FROM students_courses WHERE student_id = $1 AND course_id = $2`, [student, courses])
 
         if(!check.rows[0]){
-            await dbClient.query('INSERT INTO students_courses (student_id, course_id) VALUES ($1, $2)', [student, courses])
+            await dbClient.query(`INSERT INTO students_courses (student_id, course_id) VALUES ($1, $2)`, [student, courses])
 
-            const result = await dbClient.query('SELECT student_id, course_id FROM students_courses')
+            const result = await dbClient.query(`SELECT student_id, course_id FROM students_courses`)
             res.status(201).send({data: result.rows})
         }else{
             res.status(409).send('Student already is on the wheel')
@@ -72,6 +72,58 @@ wheelControler.post('/:student_id/:course_id', async(req: Request, res:Response)
         console.log('Error occurred:', err);
         res.status(500).send({ err: err });
     }
+})
+
+wheelControler.put('/:student_id/:course_id/:new_student_id', async(req:Request, res:Response) => {
+    const student_id = req.params.student_id
+    const parsedStudentId = parseInt(student_id)
+
+    const course_id = req.params.course_id
+    const parsedCourseId = parseInt(course_id)
+
+    const new_student_id = req.params.new_student_id
+    const parsedNewStudentId = parseInt(new_student_id)
+
+
+    if(isNaN(parsedStudentId) || isNaN(parsedCourseId) || isNaN(parsedNewStudentId)){
+        res.status(400).send('Student_id and course_id and new_student_id must be a number')
+    }
+
+    const findId = await dbClient.query(`SELECT student_id FROM students_courses WHERE student_id = $1 AND course_id = $2`, [parsedStudentId, parsedCourseId])
+
+    if(findId.rows.length === 0){
+        res.status(404).send('Student_Id or Course_Id Not Found')
+    }
+
+    await dbClient.query(`UPDATE students_courses SET student_id = $1, course_id = $2 WHERE student_id = $3`, [parsedNewStudentId, parsedCourseId, parsedStudentId])
+
+    res.status(200).send('Student_Id putted')
+
+})
+
+
+wheelControler.patch('/:student_id/:new_student_id', async(req:Request, res:Response) => {
+    const student_id = req.params.student_id
+    const parsedStudentId = parseInt(student_id)
+
+    const new_student_id = req.params.new_student_id
+    const parsedNewStudentId = parseInt(new_student_id)
+
+
+    if(isNaN(parsedStudentId) || isNaN(parsedNewStudentId)){
+        res.status(400).send('Student_id and new_student_id must be a number')
+    }
+
+    const findId = await dbClient.query(`SELECT student_id FROM students_courses WHERE student_id = $1`, [parsedStudentId])
+
+    if(findId.rows.length === 0){
+        res.status(404).send('Student_Id or Course_Id Not Found')
+    }
+
+    await dbClient.query(`UPDATE students_courses SET student_id = $1 WHERE student_id = $2`, [parsedNewStudentId, parsedStudentId])
+
+    res.status(200).send('Student_Id patched')
+
 })
 
 
@@ -84,14 +136,14 @@ wheelControler.delete('/:student_id', async (req:Request, res:Response) =>{
             return
         }
 
-        const exists = await dbClient.query('SELECT student_id FROM students_courses WHERE student_id = $1', [student])
+        const exists = await dbClient.query(`SELECT student_id FROM students_courses WHERE student_id = $1`, [student])
 
         if(exists.rows.length === 0){
             res.status(404).send('Student_Id Not Found')
             return
         }
 
-        await dbClient.query('DELETE FROM students_courses WHERE student_id = $1', [student])
+        await dbClient.query(`DELETE FROM students_courses WHERE student_id = $1`, [student])
 
         res.status(200).send('Student dropped from wheel')
     }catch(err){
