@@ -312,8 +312,8 @@ attendanceController.delete('/lesson', teacherAuthenticationMiddleware, async (r
         }
 
         const enrollmentCheck = await dbClient.query(`
-            SELECT student_id 
-            FROM enrollments 
+            SELECT student_id
+            FROM grades
             WHERE course_id = $1 AND student_id = ANY($2::int[])
         `, [courseId, studentIds]);
 
@@ -322,7 +322,11 @@ attendanceController.delete('/lesson', teacherAuthenticationMiddleware, async (r
         console.log("Enrollment check rows:", enrollmentCheck.rows.map(r => r.student_id));
 
 
-        if (enrollmentCheck.rows.length !== studentIds.length) {
+        const enrolledStudentIds = [...new Set(enrollmentCheck.rows.map(r => r.student_id))];
+
+        if (enrolledStudentIds.length !== studentIds.length) {
+            const missing = studentIds.filter(id => !enrolledStudentIds.includes(id));
+            console.log("Missing student IDs:", missing);
             response.status(400).send({ error: "Some students are not enrolled in this course" });
             return;
         }
@@ -337,13 +341,6 @@ attendanceController.delete('/lesson', teacherAuthenticationMiddleware, async (r
             response.status(404).send({ message: "No attendance records found for the specified students and date" });
             return;
         }
-
-        const attendanceIds = attendanceRecords.rows.map(record => record.id);
-
-        await dbClient.query(`
-            DELETE FROM attendance_comments
-            WHERE attendance_id = ANY($1::int[])
-        `, [attendanceIds]);
 
         const deleteResult = await dbClient.query(`
             DELETE FROM attendance
