@@ -101,7 +101,7 @@ attendanceController.post('/student', teacherAuthenticationMiddleware, async (re
     }
 });
 
-attendanceController.post('/multiplyatten', teacherAuthenticationMiddleware, async (request: Request, response: Response) => {
+attendanceController.post('/multiplyattendance', teacherAuthenticationMiddleware, async (request: Request, response: Response) => {
     const { attendanceRecords, date, courseId } = request.body;
 
     if (!attendanceRecords || !Array.isArray(attendanceRecords) || !date || !courseId) {
@@ -144,13 +144,17 @@ attendanceController.post('/multiplyatten', teacherAuthenticationMiddleware, asy
 
         const studentIds = attendanceRecords.map(record => record.studentId);
         const enrollmentCheck = await dbClient.query(`
-            SELECT student_id 
-            FROM enrollments 
+            SELECT student_id
+            FROM grades
             WHERE course_id = $1 AND student_id = ANY($2::int[])
         `, [courseId, studentIds]);
 
-        if (enrollmentCheck.rows.length !== studentIds.length) {
-            response.status(400).send({ error: "Some students are not enrolled in this course" });
+
+        const foundStudentIds = new Set(enrollmentCheck.rows.map(r => parseInt(r.student_id)));
+        const missingStudents = studentIds.filter(id => !foundStudentIds.has(id));
+
+        if (missingStudents.length > 0) {
+            response.status(400).send({ error: "Some students are not enrolled in this course", missingStudents });
             return;
         }
 
@@ -166,7 +170,6 @@ attendanceController.post('/multiplyatten', teacherAuthenticationMiddleware, asy
 
         const results = await Promise.all(insertPromises);
 
-        // Format response
         const insertedRecords = results.map(result => result.rows[0]);
         response.status(201).send({
             message: `Successfully recorded attendance for ${insertedRecords.length} students`,
@@ -222,24 +225,31 @@ attendanceController.patch('/lesson', teacherAuthenticationMiddleware, async (re
             return;
         }
 
-        // Verify all students are in this course
         const studentIds = studentAttendance.map(record => record.studentId);
         const enrollmentCheck = await dbClient.query(`
-            SELECT student_id 
-            FROM enrollments 
+            SELECT student_id
+            FROM grades
             WHERE course_id = $1 AND student_id = ANY($2::int[])
         `, [courseId, studentIds]);
 
-        if (enrollmentCheck.rows.length !== studentIds.length) {
+        console.log("Course ID:", courseId);
+        console.log("Student IDs:", studentIds);
+        console.log("Enrollment check rows:", enrollmentCheck.rows.map(r => r.student_id));
+
+
+        const enrolledStudentIds = [...new Set(enrollmentCheck.rows.map(r => r.student_id))];
+
+        if (enrolledStudentIds.length !== studentIds.length) {
+            const missing = studentIds.filter(id => !enrolledStudentIds.includes(id));
+            console.log("Missing student IDs:", missing);
             response.status(400).send({ error: "Some students are not enrolled in this course" });
             return;
         }
 
-        // Update or insert attendance records for each student
+
         const updateResults = [];
 
         for (const record of studentAttendance) {
-            // Check if attendance record already exists
             const existingRecord = await dbClient.query(`
                 SELECT id FROM attendance 
                 WHERE student_id = $1 AND date = $2
@@ -248,7 +258,6 @@ attendanceController.patch('/lesson', teacherAuthenticationMiddleware, async (re
             let result;
 
             if (existingRecord.rows.length > 0) {
-                // Update existing record
                 result = await dbClient.query(`
                     UPDATE attendance 
                     SET status = $1 
@@ -256,7 +265,6 @@ attendanceController.patch('/lesson', teacherAuthenticationMiddleware, async (re
                     RETURNING id AS "attendanceId", student_id AS "studentId", date, status
                 `, [record.status, existingRecord.rows[0].id]);
             } else {
-                // Insert new record
                 result = await dbClient.query(`
                     INSERT INTO attendance (student_id, date, status)
                     VALUES ($1, $2, $3)
@@ -291,7 +299,6 @@ attendanceController.delete('/lesson', teacherAuthenticationMiddleware, async (r
     }
 
     try {
-        // Verify teacher has access to this course
         const courseAccess = await dbClient.query(`
             SELECT c.id 
             FROM courses c
@@ -304,19 +311,22 @@ attendanceController.delete('/lesson', teacherAuthenticationMiddleware, async (r
             return;
         }
 
-        // Verify all students are in this course
         const enrollmentCheck = await dbClient.query(`
             SELECT student_id 
             FROM enrollments 
             WHERE course_id = $1 AND student_id = ANY($2::int[])
         `, [courseId, studentIds]);
 
+        console.log("Course ID:", courseId);
+        console.log("Student IDs:", studentIds);
+        console.log("Enrollment check rows:", enrollmentCheck.rows.map(r => r.student_id));
+
+
         if (enrollmentCheck.rows.length !== studentIds.length) {
             response.status(400).send({ error: "Some students are not enrolled in this course" });
             return;
         }
 
-        // Get the attendance records that will be deleted
         const attendanceRecords = await dbClient.query(`
             SELECT id, student_id, date, status
             FROM attendance
@@ -328,16 +338,13 @@ attendanceController.delete('/lesson', teacherAuthenticationMiddleware, async (r
             return;
         }
 
-        // Get attendance IDs for deleting comments
         const attendanceIds = attendanceRecords.rows.map(record => record.id);
 
-        // Delete comments associated with these attendance records
         await dbClient.query(`
             DELETE FROM attendance_comments
             WHERE attendance_id = ANY($1::int[])
         `, [attendanceIds]);
 
-        // Delete the attendance records
         const deleteResult = await dbClient.query(`
             DELETE FROM attendance
             WHERE student_id = ANY($1::int[]) AND date = $2
