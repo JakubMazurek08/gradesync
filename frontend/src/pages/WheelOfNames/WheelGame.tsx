@@ -39,7 +39,7 @@ export const WheelGame = ({ data }: WheelGameProps) => {
                     const endAngle = (2 * Math.PI * (i + 1)) / slices;
 
                     const segment = this.add.graphics();
-                    // segment.fillStyle(i % 2 === 0 ? 0xFFC518 : 0xFF8528, 1);
+
                     if(i % 2 === 0){
                         segment.fillStyle(0x2D0983, 1)
                     }
@@ -124,7 +124,7 @@ export const WheelGame = ({ data }: WheelGameProps) => {
         if (gameRef.current) {
             game = new Phaser.Game({
                 type: Phaser.AUTO,
-                width: 550, // Rozmiar sceny zwiększony dla lepszej widoczności
+                width: 550, // Rozmiar sceny 
                 height: 550,
                 parent: gameRef.current,
                 scene: [PlayGame],

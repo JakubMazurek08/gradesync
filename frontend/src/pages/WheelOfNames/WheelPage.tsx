@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 import { WheelGame } from "./WheelGame.tsx";
+import { WheelAdd } from "./WheelAdd.tsx";
+import { WheelDelete } from "./WheelDelete.tsx";
+import { WheelPatch } from "./WheelPatch.tsx";
+import { WheelPut } from "./WheelPut.tsx";
+
 export const WheelPage = () => {
   const [data, setData] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -43,7 +48,11 @@ export const WheelPage = () => {
                       <li key={item}>
                         {item.first_name} {item.last_name}
                       </li>
-                  ))}
+                  ))}<br/>
+                  <WheelAdd/><br />
+                  <WheelDelete/><br />
+                  <WheelPatch/><br />
+                  <WheelPut/>
                 </div>
               </div>
             );
