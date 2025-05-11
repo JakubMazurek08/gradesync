@@ -9,7 +9,44 @@ import {GradeDto} from "./dto/grade.dto";
 export const gradeController = express.Router();
 
 
-
+/**
+ * @swagger
+ * /grade/courses:
+ *   get:
+ *     summary: Get courses for a student with average grades
+ *     description: This endpoint retrieves the courses assigned to the logged-in student along with the average grade for each course.
+ *     tags:
+ *       - Grades
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of courses with average grades
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   courseId:
+ *                     type: integer
+ *                   courseName:
+ *                     type: string
+ *                   averageGrade:
+ *                     type: number
+ *                     format: float
+ *                   teacherFirstName:
+ *                     type: string
+ *                   teacherLastName:
+ *                     type: string
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: No courses found
+ *       500:
+ *         description: Internal server error
+ */
 gradeController.get('/courses', authenticationMiddleware, async (req:Request, res:Response) => {
     if(!req.userId){
         res.status(401).send({error: "unauthorized"});
@@ -41,6 +78,62 @@ gradeController.get('/courses', authenticationMiddleware, async (req:Request, re
     }
 })
 
+/**
+ * @swagger
+ * /grade/{course}:
+ *   get:
+ *     summary: Get grades for a specific course for the logged-in student
+ *     description: This endpoint retrieves the grades for a specific course assigned to the logged-in student.
+ *     tags:
+ *       - Grades
+ *     parameters:
+ *       - in: path
+ *         name: course
+ *         required: true
+ *         description: The course name
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Course details and grades
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 courseName:
+ *                   type: string
+ *                 teacherFirstName:
+ *                   type: string
+ *                 teacherLastName:
+ *                   type: string
+ *                 grades:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       gradeId:
+ *                         type: integer
+ *                       gradeValue:
+ *                         type: number
+ *                         format: float
+ *                       gradeTitle:
+ *                         type: string
+ *                       gradeCategory:
+ *                         type: string
+ *                       gradeDescription:
+ *                         type: string
+ *       400:
+ *         description: Course parameter is required
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Course not found
+ *       500:
+ *         description: Internal server error
+ */
 gradeController.get('/:course', authenticationMiddleware, async (req: Request, res: Response) => {
     if (!req.userId) {
         res.status(401).send({ error: "unauthorized" });
@@ -98,6 +191,61 @@ gradeController.get('/:course', authenticationMiddleware, async (req: Request, r
     }
 });
 
+
+/**
+ * @swagger
+ * /grade/{course}/students:
+ *   get:
+ *     summary: Get students and their grades for a specific course
+ *     description: This endpoint retrieves a list of students and their grades for a specific course taught by the logged-in teacher.
+ *     tags:
+ *       - Grades
+ *     parameters:
+ *       - in: path
+ *         name: course
+ *         required: true
+ *         description: The course name along with the year range (e.g., "CourseName$2020-2021")
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of students and their grades
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   studentId:
+ *                     type: integer
+ *                   name:
+ *                     type: string
+ *                   grades:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: integer
+ *                         value:
+ *                           type: number
+ *                           format: float
+ *                         title:
+ *                           type: string
+ *                         category:
+ *                           type: string
+ *                         description:
+ *                           type: string
+ *       400:
+ *         description: Invalid request parameters
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal server error
+ */
 gradeController.get('/:course/students', teacherAuthenticationMiddleware, async (req: Request, res: Response) => {
     const teacherId = req.userId;
     const [courseName, yearRange] = req.params.course.split('$');
@@ -172,7 +320,65 @@ gradeController.get('/:course/students', teacherAuthenticationMiddleware, async 
     }
 });
 
-
+/**
+ * @swagger
+ * /grade/{gradeId}:
+ *   put:
+ *     summary: Update a grade
+ *     description: This endpoint updates an existing grade.
+ *     tags:
+ *       - Grades
+ *     parameters:
+ *       - in: path
+ *         name: gradeId
+ *         required: true
+ *         description: The ID of the grade to update
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               value:
+ *                 type: number
+ *               title:
+ *                 type: string
+ *               category:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: The updated grade
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 value:
+ *                   type: number
+ *                 title:
+ *                   type: string
+ *                 category:
+ *                   type: string
+ *                 description:
+ *                   type: string
+ *       400:
+ *         description: Invalid request parameters
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Grade not found
+ *       500:
+ *         description: Internal server error
+ */
 gradeController.put('/:gradeId', teacherAuthenticationMiddleware, validationMiddleware(GradeDto), async (req: Request, res: Response) => {
     if (!req.userId) {
         res.status(401).send({ error: "unauthorized" });
@@ -203,6 +409,35 @@ gradeController.put('/:gradeId', teacherAuthenticationMiddleware, validationMidd
 });
 
 
+/**
+ * @swagger
+ * /grade/{id}:
+ *   delete:
+ *     summary: Delete a grade
+ *     description: This endpoint deletes a grade by its ID.
+ *     tags:
+ *       - Grades
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the grade to delete
+ *         schema:
+ *           type: integer
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Grade deleted successfully
+ *       400:
+ *         description: Invalid grade ID
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Grade not found or you do not have permission to delete it
+ *       500:
+ *         description: Internal server error
+ */
 gradeController.delete('/:id', teacherAuthenticationMiddleware, async (req: Request, res: Response) => {
     const teacherId = req.userId;
     const gradeId = parseInt(req.params.id, 10);
@@ -241,7 +476,64 @@ gradeController.delete('/:id', teacherAuthenticationMiddleware, async (req: Requ
     }
 });
 
-
+/**
+ * @swagger
+ * /grade:
+ *   post:
+ *     summary: Add a grade for a student
+ *     description: This endpoint allows a teacher to add a grade for a student.
+ *     tags:
+ *       - Grades
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               studentId:
+ *                 type: integer
+ *               course:
+ *                 type: string
+ *               value:
+ *                 type: number
+ *               title:
+ *                 type: string
+ *               category:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: Grade created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 studentId:
+ *                   type: integer
+ *                 course:
+ *                   type: string
+ *                 value:
+ *                   type: number
+ *                 title:
+ *                   type: string
+ *                 category:
+ *                   type: string
+ *                 description:
+ *                   type: string
+ *       400:
+ *         description: Missing required fields or invalid course format
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Course not found
+ *       500:
+ *         description: Internal server error
+ */
 gradeController.post('/', teacherAuthenticationMiddleware, validationMiddleware(GradeDto), async (req: Request, res: Response) => {
     const teacherId = req.userId;
     const { studentId, course, value, title, category, description } = req.body;

@@ -23,7 +23,68 @@ type Assignment = {
     date: string,
 }
 
-
+/**
+ * @swagger
+ * /assignment:
+ *   get:
+ *     summary: Get timetable and assignments for the logged-in user.
+ *     description: This endpoint returns the timetable and assignments for either a teacher or a student, depending on the user role.
+ *     tags:
+ *       - Assignments
+ *     responses:
+ *       200:
+ *         description: Timetable and assignments data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 timetable:
+ *                   type: array
+ *                   description: Array of days with lesson timings and course names
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       startTime:
+ *                         type: string
+ *                         description: Start time of the lesson
+ *                       endTime:
+ *                         type: string
+ *                         description: End time of the lesson
+ *                       courseName:
+ *                         type: string
+ *                         description: Name of the course
+ *                 assignments:
+ *                   type: array
+ *                   description: Array of assignments with related information
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       startTime:
+ *                         type: string
+ *                         description: Start time of the assignment
+ *                       endTime:
+ *                         type: string
+ *                         description: End time of the assignment
+ *                       name:
+ *                         type: string
+ *                         description: Name of the assignment
+ *                       category:
+ *                         type: string
+ *                         description: Category of the assignment (e.g., homework, exam)
+ *                       courseName:
+ *                         type: string
+ *                         description: Name of the course related to the assignment
+ *                       date:
+ *                         type: string
+ *                         description: Date of the assignment
+ *       401:
+ *         description: Unauthorized, user is not logged in
+ *       404:
+ *         description: School not found for the user
+ *       500:
+ *         description: Internal server error
+ */
 assignmentController.get("/", authenticationMiddleware, async (req: Request, res: Response) => {
     if (!req.userId) {
         res.status(401).send({ error: "unauthorized" });
@@ -137,11 +198,63 @@ assignmentController.get("/", authenticationMiddleware, async (req: Request, res
             assignments: assignments
         });
     } catch (err) {
-        console.error("Error fetching timetable/assignments:", err);
+        console.error("Error fetching timetable/assignment:", err);
         res.status(500).send({ msg: 'Internal server error', err });
     }
 });
 
+
+/**
+ * @swagger
+ * /assignment:
+ *   post:
+ *     summary: Create a new assignment.
+ *     description: This endpoint allows the creation of a new assignment for a course.
+ *     tags:
+ *       - Assignments
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: Title of the assignment
+ *               lessonHour:
+ *                 type: integer
+ *                 description: Lesson hour (1-6)
+ *               date:
+ *                 type: string
+ *                 description: Date of the assignment
+ *               course:
+ *                 type: integer
+ *                 description: ID of the course the assignment belongs to
+ *               category:
+ *                 type: string
+ *                 description: Category of the assignment (e.g., homework, exam)
+ *               description:
+ *                 type: string
+ *                 description: Description of the assignment
+ *     responses:
+ *       201:
+ *         description: Assignment created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: The ID of the created assignment
+ *       400:
+ *         description: Invalid input data
+ *       401:
+ *         description: Unauthorized, user is not logged in
+ *       500:
+ *         description: Internal server error
+ */
 assignmentController.post("/", authenticationMiddleware, validationMiddleware(AssignmentDto), async (req: Request, res: Response) => {
     const {title, lessonHour, date, course, category, description} = req.body;
 
@@ -160,6 +273,66 @@ assignmentController.post("/", authenticationMiddleware, validationMiddleware(As
     }
 });
 
+/**
+ * @swagger
+ * /assignment/{id}:
+ *   put:
+ *     summary: Update an existing assignment.
+ *     description: This endpoint allows the update of an existing assignment.
+ *     tags:
+ *       - Assignments
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the assignment to update
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: Title of the assignment
+ *               lessonHour:
+ *                 type: integer
+ *                 description: Lesson hour (1-6)
+ *               date:
+ *                 type: string
+ *                 description: Date of the assignment
+ *               courseString:
+ *                 type: string
+ *                 description: Course name and year (e.g., Math$2022-2023)
+ *               category:
+ *                 type: string
+ *                 description: Category of the assignment (e.g., homework, exam)
+ *               description:
+ *                 type: string
+ *                 description: Description of the assignment
+ *     responses:
+ *       200:
+ *         description: Assignment updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: The ID of the updated assignment
+ *       400:
+ *         description: Invalid input data or course not found
+ *       401:
+ *         description: Unauthorized, user is not logged in
+ *       404:
+ *         description: Assignment not found
+ *       500:
+ *         description: Internal server error
+ */
 assignmentController.put("/:id", authenticationMiddleware, validationMiddleware(AssignmentDto), async (req: Request, res: Response) => {
     const {id} = req.params;
     const {title, lessonHour, date, courseString, category, description} = req.body;
@@ -201,7 +374,39 @@ assignmentController.put("/:id", authenticationMiddleware, validationMiddleware(
     }
 });
 
-
+/**
+ * @swagger
+ * /assignment/{id}:
+ *   delete:
+ *     summary: Delete an assignment.
+ *     description: This endpoint allows the deletion of an assignment.
+ *     tags:
+ *       - Assignments
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the assignment to delete
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Assignment deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Success message
+ *       404:
+ *         description: Assignment not found
+ *       401:
+ *         description: Unauthorized, user is not logged in
+ *       500:
+ *         description: Internal server error
+ */
 assignmentController.delete("/:id", authenticationMiddleware, async (req: Request, res: Response) => {
     const {id} = req.params;
 

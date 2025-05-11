@@ -4,6 +4,32 @@ import {authenticationMiddleware} from "../../middleware/authentication.middlewa
 
 export const userController = express.Router();
 
+/**
+ * @swagger
+ * /user/firstName:
+ *   get:
+ *     summary: Get the first name of the logged-in user.
+ *     description: This endpoint returns the first name of the authenticated user.
+ *     tags:
+ *       - User
+ *     responses:
+ *       200:
+ *         description: The first name of the user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 firstName:
+ *                   type: string
+ *                   description: The user's first name
+ *       401:
+ *         description: Unauthorized, user is not logged in
+ *       400:
+ *         description: First name not found for the user
+ *       500:
+ *         description: Internal server error
+ */
 userController.get("/firstName", authenticationMiddleware, async (req: Request, res: Response) => {
     if (!req.userId) {
         res.status(401).send({ error: "unauthorized" });

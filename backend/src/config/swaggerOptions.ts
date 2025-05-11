@@ -1,10 +1,10 @@
-const options = {
+export const swaggerOptions = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'Your API Title',
+            title: 'Gradesync',
             version: '1.0.0',
-            description: 'API documentation for your Express backend',
+            description: 'API documentation for gradesync backend',
         },
         servers: [
             {
@@ -12,7 +12,5 @@ const options = {
             },
         ],
     },
-    apis: ['../resources/**/*.ts']
+    apis: ['src/resources/**/*.ts']  // if run from root with ts-node or transpiled JS
 };
-
-module.exports = options;
