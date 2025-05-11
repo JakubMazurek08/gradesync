@@ -42,7 +42,7 @@ export const WheelPage = () => {
             return (
               <div>
                 <WheelGame data={data} />
-                <div class="text-white">
+                <div class="ml-2 text-white">
                   <h2>Students: </h2>  
                   {data.map((item) => (
                       <li key={item}>
