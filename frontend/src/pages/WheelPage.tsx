@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import { WheelGame } from '../components/wheelPage/WheelGame.tsx';
-import { WheelAdd } from "../components/wheelPage/WheelAdd.tsx";
-import { WheelDelete } from "../components/wheelPage/WheelDelete.tsx";
-import { WheelPatch } from "../components/wheelPage/WheelPatch.tsx";
-import { WheelPut } from "../components/wheelPage/WheelPut.tsx";
+
 
 export const WheelPage = () => {
     const [data, setData] = useState<any[]>([]);

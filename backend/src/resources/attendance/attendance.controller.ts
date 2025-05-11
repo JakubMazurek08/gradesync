@@ -1,11 +1,12 @@
 import express, { Request, Response } from "express";
 import {dbClient} from "../../config/database";
 import {authenticationMiddleware} from "../../middleware/authentication.middleware";
-import {teacherAuthenticationMiddleware} from "../../middleware/teacherValidation.middleware";
-import {validateDto} from "./middleware/attendance.middleware";
-import {BulkAttendanceDto, CreateAttendanceDto} from "./dto/attendance.dto";
+import {validationMiddleware} from "../../middleware/validation.middleware";
+import {BulkAttendanceDto} from "./dto/bulk-attendance.dto";
+import {CreateAttendanceDto} from "./dto/create-attendance.dto";
 import {plainToInstance} from "class-transformer";
 import {validate} from "class-validator";
+import {teacherAuthenticationMiddleware} from "../../middleware/teacherAuthentication.middleware";
 
 
 export const attendanceController = express.Router();
@@ -77,7 +78,7 @@ attendanceController.get('/sum', authenticationMiddleware, async (request: Reque
     }
 })
 
-attendanceController.post('/student', teacherAuthenticationMiddleware, validateDto(CreateAttendanceDto), async (request: Request, response: Response) => {
+attendanceController.post('/student', teacherAuthenticationMiddleware, validationMiddleware(CreateAttendanceDto), async (request: Request, response: Response) => {
     const { studentId, date, status } = request.body;
 
     if (!studentId || !date || !status) {
@@ -105,18 +106,19 @@ attendanceController.post('/student', teacherAuthenticationMiddleware, validateD
     }
 });
 
-attendanceController.post('/multiplyattendance', validateDto(BulkAttendanceDto), teacherAuthenticationMiddleware, async (request: Request, response: Response) => {
+attendanceController.post('/multiplyattendance', validationMiddleware(BulkAttendanceDto), teacherAuthenticationMiddleware, async (request: Request, response: Response) => {
     const dto = plainToInstance(BulkAttendanceDto, request.body);
     const errors = await validate(dto, { whitelist: true });
 
     if (errors.length > 0) {
-        return response.status(400).send({
+        response.status(400).send({
             error: 'Validation failed',
             details: errors.map(e => ({
                 property: e.property,
                 constraints: e.constraints,
             })),
         });
+        return;
     }
     const { attendanceRecords, date, courseId } = request.body;
 

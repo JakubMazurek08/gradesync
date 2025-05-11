@@ -297,8 +297,8 @@ wheelController.patch('/:student_id/:new_student_id', async(req:Request, res:Res
  * /wheel/{student_id}/{course_id}:
  *   delete:
  *     summary: Remove a student from a course
- *       tags:
- *         - Wheel
+ *     tags:
+ *       - Wheel
  *     parameters:
  *       - in: path
  *         name: student_id

@@ -1,5 +1,5 @@
-import { Expose, Type } from 'class-transformer';
-import { IsInt, IsNotEmpty, IsDateString, IsArray } from 'class-validator';
+import { Expose } from 'class-transformer';
+import {IsInt, IsNotEmpty, IsDateString, IsArray, ArrayNotEmpty, ValidateNested} from 'class-validator';
 import { BulkAttendanceRecordDto } from './bulk-attendance-record.dto';
 
 export class BulkAttendanceDto {
@@ -16,7 +16,6 @@ export class BulkAttendanceDto {
     @IsArray({ message: 'attendanceRecords must be an array' })
     @ArrayNotEmpty({ message: 'attendanceRecords cannot be empty' })
     @ValidateNested({ each: true })
-    @Type(() => BulkAttendanceRecordDto)
     @Expose()
     attendanceRecords!: BulkAttendanceRecordDto[];
 }

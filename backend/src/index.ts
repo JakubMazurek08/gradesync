@@ -16,6 +16,7 @@ import {wheelController} from "./resources/wheel/wheel.controller";
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import {swaggerOptions} from "./config/swaggerOptions";
+import {attendanceController} from "./resources/attendance/attendance.controller";
 
 const port = 3000;
 
@@ -43,11 +44,12 @@ app.use('/dev', devController);
 app.use('/course', courseController);
 app.use('/message', messageController);
 app.use('/wheel', wheelController);
+app.use('/attendance', attendanceController);
 
 connectDB().then(() => {
     app.listen(port, () => {
         console.log(`Server is running on port: ${port}`)
-        console.log(`Swagger is running on http://localhost:${port}/api-docs/}`)
+        console.log(`Swagger is running on http://localhost:${port}/api-docs`)
     })
 }).catch(e => {
     console.error(e);
