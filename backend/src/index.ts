@@ -7,6 +7,14 @@ import {loginController} from "./authentication/login.controller";
 import {userController} from "./user/user.controller";
 import {gradeController} from "./grade/grade.controller";
 import {attendanceController} from "./resources/attendance/attendance.controller";
+import {loginController} from "./resources/authentication/login.controller";
+import {userController} from "./resources/user/user.controller";
+import {gradeController} from "./resources/grade/grade.controller";
+import {loggerMiddleware} from "./middleware/logger.middleware";
+import {teacherController} from "./resources/teacher/teacher.controller";
+import {devController} from "./resources/dev/dev.controller";
+import {assignmentController} from "./resources/assignment/assignment.controller";
+import {courseController} from "./resources/course/course.controller";
 
 const port = 3000;
 
@@ -20,11 +28,16 @@ app.use(cors({
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(loggerMiddleware);
 
 app.use('/login', loginController);
 app.use('/user', userController);
 app.use('/grade', gradeController);
 app.use('/attendance', attendanceController);
+app.use('/assignment', assignmentController);
+app.use('/teacher', teacherController);
+app.use('/dev', devController);
+app.use('/course', courseController)
 
 connectDB().then(() => {
     app.listen(port, () => {
