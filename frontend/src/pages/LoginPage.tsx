@@ -1,9 +1,10 @@
-import { Input } from "../components/ui/Input.tsx";
-import { Button } from "../components/ui/Button.tsx";
-import { useState } from "react";
-import { useUserStore } from "../stores/userStore.ts";
-import { Text } from "../components/ui/Text.tsx";
-import { useForm } from "react-hook-form";
+import {Input} from "../components/ui/Input.tsx";
+import {Button} from "../components/ui/Button.tsx";
+import {useState} from "react";
+import {useUserStore} from "../stores/userStore.ts";
+import {Text} from "../components/ui/Text.tsx";
+import {useForm} from "react-hook-form";
+import toastify from "toastify-js";
 
 type FormFields = {
     login: string;
@@ -14,13 +15,13 @@ type FormFields = {
 };
 
 export const LoginPage = () => {
-    const { setUserId } = useUserStore();
+    const {setUserId, setIsTeacher} = useUserStore();
     const [isRegistering, setIsRegistering] = useState(false);
 
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
     } = useForm<FormFields>();
 
     const onSubmit = (data: FormFields) => {
@@ -36,8 +37,31 @@ export const LoginPage = () => {
                     login: data.login,
                     password: data.password,
                 }),
-            }).then((res) =>
-                res.json().then((data) => setUserId(data.id))
+            }).then((res) => {
+                if(res.status === 200) {
+                    res.json().then((data) => {setUserId(data.id); setIsTeacher(data.isTeacher)})
+                    toastify({
+                            text: "Logged In!",
+                            duration: 3000,
+                            backgroundColor: '#903FEDFF',
+                        }
+                    ).showToast();
+                } else if(res.status === 401 || res.status === 404) {
+                toastify({
+                        text: "Invalid Credentials",
+                        duration: 3000,
+                        backgroundColor: '#ff0000',
+                    }
+                ).showToast();
+                }else{
+                    toastify({
+                            text: "Something Went Wrong",
+                            duration: 3000,
+                            backgroundColor: '#ff0000',
+                        }
+                    ).showToast();
+                }
+            }
             );
         } else {
             const URL = import.meta.env.VITE_URL + "login/register";
@@ -54,8 +78,24 @@ export const LoginPage = () => {
                     fullName: data.fullName,
                     isTeacher: data.isTeacher,
                 }),
-            }).then((res) =>
-                res.json().then((data) => setUserId(data.id))
+            }).then((res) => {
+                if(res.status === 200) {
+                    res.json().then((data) => {setUserId(data.id); setIsTeacher(data.isTeacher)})
+                    toastify({
+                            text: "Created Account!",
+                            duration: 3000,
+                            backgroundColor: '#903FEDFF',
+                        }
+                    ).showToast();
+                }else{
+                    toastify({
+                            text: "Something Went Wrong",
+                            duration: 3000,
+                            backgroundColor: '#ff0000',
+                        }
+                    ).showToast();
+                }
+                }
             );
         }
     };
@@ -92,15 +132,16 @@ export const LoginPage = () => {
                     <div className="w-full">
                         <Text type="h4">Login</Text>
                         <Input
-                            type="large"
                             {...register("login",
-                                {required: "Login is required",
-                                minLength: {
-                                    value: 4,
-                                    message: "Login must be at least 4 characters"
-                                }
+                                {
+                                    required: "Login is required",
+                                    minLength: {
+                                        value: 4,
+                                        message: "Login must be at least 4 characters"
+                                    }
                                 })}
                             placeholder="type here..."
+                            inputSize="large"
                         />
                         {errors?.login && <Text>{errors.login.message}</Text>}
                     </div>
@@ -108,7 +149,8 @@ export const LoginPage = () => {
                     <div className="w-full">
                         <Text type="h4">Password</Text>
                         <Input
-                            type="large"
+                            inputSize="large"
+                            type="password"
                             {...register("password", {
                                 required: "Password is required",
                                 minLength: {
@@ -126,7 +168,7 @@ export const LoginPage = () => {
                             <div className="w-full">
                                 <Text type="h4">Email</Text>
                                 <Input
-                                    type="large"
+                                    inputSize="large"
                                     {...register("email", {
                                         required: "Email is required",
                                         pattern: {
@@ -142,7 +184,7 @@ export const LoginPage = () => {
                             <div className="w-full">
                                 <Text type="h4">Full Name</Text>
                                 <Input
-                                    type="large"
+                                    inputSize="large"
                                     {...register("fullName", {
                                         required: "Full name is required",
                                         validate: (value) => {
