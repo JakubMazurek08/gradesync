@@ -1,6 +1,6 @@
 import {Outlet} from "react-router-dom";
 import {Text} from "../components/ui/Text.tsx";
-import {Stars, Calendar, Book, Clock, Message, Settings, Hamburger} from "../components/ui/Icons.tsx";
+import {Stars, Calendar, Book, Clock, Message, Settings, Hamburger, Wheel} from "../components/ui/Icons.tsx";
 import {useEffect, useState} from "react";
 import {NavbarButton} from "../components/ui/NavbarButton.tsx";
 import {LoginPage} from "./LoginPage.tsx";
@@ -45,6 +45,7 @@ export const Navbar = () => {
                         <NavbarButton url='/dashboard/calendar'> <Book/> <Text type='nav'>Calendar</Text></NavbarButton>
                         <NavbarButton url='/dashboard/messages'> <Clock/> <Text type='nav'>Messages</Text></NavbarButton>
                         <NavbarButton url='/dashboard/frequency'> <Message/> <Text type='nav'>Frequency</Text></NavbarButton>
+                        <NavbarButton url='/dashboard/wheel'> <Wheel/> <Text type='nav'>Wheel</Text></NavbarButton>
                     </div>
                 </div>
                 <div className='w-full border-t-3 border-lightgray rounded-full'></div>

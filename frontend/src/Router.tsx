@@ -7,7 +7,8 @@ import { Navbar } from './pages/Navbar.tsx';
 import { GradesPage } from './pages/GradesPage.tsx';
 import { Settings } from './pages/Settings.tsx';
 import { CalendarPage } from './pages/CalendarPage.tsx';
-import { WheelPage } from './pages/WheelPage.tsx';
+import {ErrorPage} from './pages/ErrorPage.tsx';
+import {WheelPage} from "./pages/WheelPage.tsx";
 
 const router = createBrowserRouter([
     {
@@ -48,9 +49,13 @@ const router = createBrowserRouter([
             },
             {
                 path: 'wheel',
-                element: <WheelPage/>,
+                element: <WheelPage/>
             }
         ],
+    },
+    {
+        path: '*',
+        element: <ErrorPage />,
     }
 ]);
 

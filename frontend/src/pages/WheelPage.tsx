@@ -16,7 +16,7 @@ export const WheelPage = () => {
                 if (!response.ok) throw new Error("Failed to fetch data");
 
                 const result = await response.json();
-                const fullNames = result.result.map((item) => ({
+                const fullNames = result.result.map((item:any) => ({
                     first_name: item.first_name,
                     last_name: item.last_name,
                 }));
@@ -42,17 +42,14 @@ export const WheelPage = () => {
                         return (
                             <div>
                                 <WheelGame data={data} />
-                                <div class="ml-2 text-white">
+                                <div className="ml-2 text-white">
                                     <h2>Students: </h2>
                                     {data.map((item) => (
                                         <li key={item}>
                                             {item.first_name} {item.last_name}
                                         </li>
                                     ))}<br/>
-                                    <WheelAdd/><br />
-                                    <WheelDelete/><br />
-                                    <WheelPatch/><br />
-                                    <WheelPut/>
+
                                 </div>
                             </div>
                         );
