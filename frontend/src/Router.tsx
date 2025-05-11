@@ -7,6 +7,7 @@ import { Navbar } from './pages/Navbar.tsx';
 import { GradesPage } from './pages/GradesPage.tsx';
 import { Settings } from './pages/Settings.tsx';
 import { CalendarPage } from './pages/CalendarPage.tsx';
+import { ErrorPage } from './pages/ErrorPage.tsx'
 
 const router = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
                 element: <CalendarPage />,
             },
         ],
+    },
+    {
+        path: '*',
+        element: <ErrorPage />
     }
 ]);
 

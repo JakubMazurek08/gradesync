@@ -15,6 +15,7 @@ import {teacherController} from "./resources/teacher/teacher.controller";
 import {devController} from "./resources/dev/dev.controller";
 import {assignmentController} from "./resources/assignment/assignment.controller";
 import {courseController} from "./resources/course/course.controller";
+import {messageController} from "./resources/messages/message.controller"
 
 const port = 3000;
 
@@ -38,6 +39,7 @@ app.use('/assignment', assignmentController);
 app.use('/teacher', teacherController);
 app.use('/dev', devController);
 app.use('/course', courseController)
+app.use('/message', messageController)
 
 connectDB().then(() => {
     app.listen(port, () => {
